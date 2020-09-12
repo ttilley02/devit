@@ -14,9 +14,9 @@ offersRouter
     const { dev_id, offer_detail } = req.body;
     const newOffer = { dev_id, offer_detail };
 
-    if (newOffer.dev_id == null || newOffer.employer_id == null) {
+    if (newOffer.dev_id == null || newOffer.offer_detail == null) {
       return res.status(400).json({
-        error: `Missing '${key}' in request body`,
+        error: `Missing recipient or details in request body`,
       });
     }
 
