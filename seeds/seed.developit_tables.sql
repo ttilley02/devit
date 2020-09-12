@@ -56,17 +56,17 @@ VALUES
     ('C++'),
     ('SQL');
 
-INSERT INTO developit_user_skills (user_id, skill_name)  
+INSERT INTO developit_user_skills (user_id, skill_name, skill_level)  
 VALUES
-    (1, 'React'),
-    (2, 'Node.js'),
-    (3, 'Java'),
-    (3, 'Drupal'),
-    (3, 'C++'),
-    (5, 'C++'),
-    (5, 'Postgres'),
-    (5, 'Python'),
-    (5, 'HTML');     
+    (1, 'React', 'entry'),
+    (2, 'Node.js', 'entry'),
+    (3, 'Java', 'expert'),
+    (3, 'Drupal', 'mid'),
+    (3, 'C++', 'mid'),
+    (5, 'C++', 'entry'),
+    (5, 'Postgres', 'expert'),
+    (5, 'Python', 'entry'),
+    (5, 'HTML', 'expert');     
 
 INSERT INTO developit_user_reviews (sender_id, receiver_id, review, rating)
 VALUES
