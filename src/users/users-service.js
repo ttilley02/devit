@@ -3,12 +3,14 @@ const bcrypt = require("bcryptjs");
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
 
 const UsersService = {
+  //service objec tot check if user name exist
   hasUserWithUserName(db, user_name) {
     return db("devit_users")
       .where({ user_name })
       .first()
       .then((user) => !!user);
   },
+  //insert a user
   insertUser(db, newUser) {
     return db
       .insert(newUser)
@@ -16,6 +18,8 @@ const UsersService = {
       .returning("*")
       .then(([user]) => user);
   },
+
+  //password validation with criteria spelled out for easy editting
   validatePassword(password) {
     if (password.length < 8) {
       return "Password must be longer than 8 characters";
@@ -31,9 +35,12 @@ const UsersService = {
     }
     return null;
   },
+  //hash a password here
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },
+
+  //serialization when needed.  Remember that test may need this added as well.
   serializeUser(user) {
     return {
       id: user.id,
