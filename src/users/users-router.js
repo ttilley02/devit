@@ -16,6 +16,8 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
 
   if (passwordError) return res.status(400).json({ error: passwordError });
 
+  //check if user name is already taken
+  //if not then insert said user and hash their password
   UsersService.hasUserWithUserName(req.app.get("db"), user_name)
     .then((hasUserWithUserName) => {
       if (hasUserWithUserName)

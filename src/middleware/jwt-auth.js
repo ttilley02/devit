@@ -3,6 +3,8 @@ const AuthService = require("./Auth-service");
 function requireAuth(req, res, next) {
   const authToken = req.get("Authorization") || "";
 
+  
+  //start a bearer token
   let bearerToken;
   if (!authToken.toLowerCase().startsWith("bearer ")) {
     return res.status(401).json({ error: "Missing bearer token" });
@@ -13,6 +15,8 @@ function requireAuth(req, res, next) {
   try {
     const payload = AuthService.verifyJwt(bearerToken);
 
+
+    //attempt to find user within the DB.  If no user then return a generic error
     AuthService.getUserWithUserName(req.app.get("db"), payload.sub)
       .then((user) => {
         if (!user)

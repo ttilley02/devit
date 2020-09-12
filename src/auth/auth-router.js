@@ -4,7 +4,7 @@ const AuthService = require("../middleware/Auth-service.js");
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
-
+//User login endpoint
 authRouter.post("/login", jsonBodyParser, (req, res, next) => {
   const { user_name, password } = req.body;
   const loginUser = { user_name, password };
@@ -15,6 +15,7 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         .status(400)
         .json({ error: `Missing '${key}' in request body` });
 
+//Auth Verification
   AuthService.getUserWithUserName(req.app.get("db"), loginUser.user_name)
     .then((dbUser) => {
       if (!dbUser || dbUser === null) {

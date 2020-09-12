@@ -7,7 +7,7 @@ const { json } = require("express");
 const profilesRouter = express.Router();
 const jsonBodyParser = express.json();
 
-//get profiles
+//get profiles from the search parameters
 cardsRouter.route("/").get(requireAuth, jsonBodyParser, (req, res, next) => {
   const { skillsNeeded, skillsWanted } = req.body;
   const profileSearchParams = { skillsNeeded, skillsWanted };
@@ -26,6 +26,5 @@ cardsRouter.route("/").get(requireAuth, jsonBodyParser, (req, res, next) => {
     .catch(next);
 });
 
-//favorite the current card and put in the my cards section
 
 module.exports = profilesRouter;
