@@ -8,6 +8,7 @@ const authRouter = require("./auth/auth-router");
 const usersRouter = require("./users/users-router");
 const offersRouter = require("./Offers/offers-router");
 const profilesRouter = require("./Profiles/profiles-Router");
+const messagesRouter = require("./messages/messages-Router")
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/profiles", profilesRouter);
 app.use("/api/offers", offersRouter);
+app.use("/api/messages", messagesRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

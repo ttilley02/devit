@@ -4,7 +4,11 @@ const { requireAuth } = require("../middleware/jwt-auth");
 
 const offersRouter = express.Router();
 const jsonBodyParser = express.json();
-const database = req.app.get("db");
+
+//I replaced this delcared variable with the "req.app.get("db")" I was getting and error regarding 
+// referencing the "req" in req.app.get as there is no request at the beginning of the router
+
+// const database = req.app.get("db");
 
 // post new offer to database
 offersRouter
@@ -22,7 +26,7 @@ offersRouter
 
     newOffer.employer_id = req.user.id;
 
-    OffersService.createOffer(database, newOffer)
+    OffersService.createOffer(req.app.get("db"), newOffer)
       .then((offer) => {
         res.status(201).json(offer);
       })
@@ -34,7 +38,7 @@ offersRouter
   .route("/dev")
   .all(requireAuth)
   .get((req, res, next) => {
-    OffersService.getByDevId(database, req.user.id)
+    OffersService.getByDevId(req.app.get("db"), req.user.id)
       .then((offers) => {
         res.status(200).json(OffersService.serializeOffers(offers));
       })
@@ -72,7 +76,7 @@ offersRouter
   .route("/emp")
   .all(requireAuth)
   .get((req, res, next) => {
-    OffersService.getByEmployerId(database, req.user.id)
+    OffersService.getByEmployerId(req.app.get("db"), req.user.id)
       .then((offers) => {
         res.status(200).json(OffersService.serializeOffers(offers));
       })
@@ -87,7 +91,7 @@ offersRouter
   .all(requireAuth)
   .all(checkForOffer)
   .get((req, res, next) => {
-    OffersService.getByOfferId(database, req.params.offer_id)
+    OffersService.getByOfferId(req.app.get("db"), req.params.offer_id)
       .then((offer) => {
         res.status(200).json(OffersService.serializeOffer(offer));
       })
@@ -95,7 +99,7 @@ offersRouter
   })
   .delete((req, res, next) => {
     const id = req.params.offer_id;
-    OffersService.deleteOffer(database, id)
+    OffersService.deleteOffer(req.app.get("db"), id)
       .then((report) => {
         res.status(200).json(report);
       })
