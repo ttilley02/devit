@@ -13,7 +13,7 @@ const ProfileService = {
         "profile.user_id"
       )
 
-      .where("userSkills.skill_name", searchParams.skill || searchParams.skill2|| searchParams.skill3);
+      .where("userSkills.skill_name", searchParams.skill || searchParams.skill2 || searchParams.skill3);
   },
 
 
