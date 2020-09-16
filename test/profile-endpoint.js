@@ -151,5 +151,36 @@ describe("Profile Endpoints", function () {
           });
       });
     });
+    context("update a in the database", () => {
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+  
+
+
+      const profileParams = {
+          blurb: "I AM AN UPDATE!! LETS GET IT!!",
+          projects: "WORD PROCESSING APP",
+          user_id: 2
+      }
+
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+      });
+
+      it("PATCH /api/profiles responds with 204 and updated profile", () => {
+        return supertest(app)
+          .patch("/api/profiles/")
+          .send(profileParams)
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .expect(204)
+          .expect((res) => {
+            expect(res.body.blurb).to.eql(testProfile.blurb);
+            expect(res.body.projects).to.eql(testProfile.projects);
+            expect(res.body.user_id).to.eql(testProfile.user_id);
+          });
+      });
+    });
   });
 });

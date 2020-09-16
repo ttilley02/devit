@@ -57,7 +57,7 @@ profilesRouter.route("/add").post(requireAuth, jsonBodyParser, (req, res, next) 
   }
 
 
-  profileParams.user_id = 1;
+  profileParams.user_id = req.user.id;
 
   profileService
   //service object
@@ -70,5 +70,34 @@ profilesRouter.route("/add").post(requireAuth, jsonBodyParser, (req, res, next) 
     .catch(next);
 
 });
+
+//updating an existing profile
+profilesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
+  const { blurb, projects } = req.body;
+  const profileParams = { blurb, projects };
+  if (profileParams === 0) {
+    return res.status(400).json({
+      error: {
+        message: `no changes made yet!`,
+      },
+    });
+  }
+
+
+  profileParams.user_id = req.user.id;
+
+  profileService
+  //service object
+    .updateProfile(req.app.get("db"),profileParams)
+    .then(() => {
+      return res.status(204).json({
+        message: "profile updated"
+      });
+    })
+    .catch(next);
+
+});
+
+
 
 module.exports = profilesRouter;

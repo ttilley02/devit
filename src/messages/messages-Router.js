@@ -19,7 +19,7 @@ messagesRouter
           error: `Missing '${key}' in request body`,
         });
 
-        newMessageFields.sender_id = 1;
+        newMessageFields.sender_id = req.user.id;
 
     //service object to post note
     messageService

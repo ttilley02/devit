@@ -51,6 +51,14 @@ const ProfileService = {
         .where("profile.id" , id)
   },
 
+  updateProfile(db, newProfileFields) {
+        
+    return db("developit_profiles as profile")
+      .where("profile.user_id",newProfileFields.user_id)
+      .update(newProfileFields);
+  },
+
+
 
 };
 
