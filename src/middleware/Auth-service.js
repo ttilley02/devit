@@ -5,8 +5,8 @@ const config = require("../config");
 const AuthService = {
 
   //service object that retrives name of user
-  getUserWithUserName(db, user_name) {
-    return db("devit_users").where({ user_name }).first();
+  getUserWithUserName(db, nickname) {
+    return db("developit_users").where({ nickname }).first();
   },
 
 

@@ -10,7 +10,7 @@ const jsonBodyParser = express.json();
 //Add a message
 messagesRouter
   .route("/")
-  .post(/*requireAuth,*/ jsonBodyParser, (req, res, next) => {
+  .post(requireAuth, jsonBodyParser, (req, res, next) => {
     const { receiver_id, message } = req.body;
     const newMessageFields = { receiver_id, message };
     for (const [key, value] of Object.entries(newMessageFields))
@@ -36,7 +36,7 @@ messagesRouter
   // get all offers specific to dev/recipient
 messagesRouter
 .route("/myMessages")
-.get((req, res, next) => {
+.get(requireAuth, (req, res, next) => {
     messageService.getById(database, req.user.id)
     .then((message) => {
         res.json(message);

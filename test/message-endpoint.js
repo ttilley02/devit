@@ -31,9 +31,9 @@ describe("message Endpoints", function () {
     )
   );
 
-  describe("GET /api/messages TEST", () => {
+  describe("POST /api/messages TEST", () => {
 
-    context("Given there are messages in the database", () => {
+    context("sending a message should yield...", () => {
       const testUsers = makeUsersArray();
       const testProfile = makeProfilesArray();
       const testMessages = makeMessagesArray();
@@ -59,16 +59,13 @@ describe("message Endpoints", function () {
           });
       });
 
-      it("POST /api/messages responds with 200 and messages", () => {
+      it("POST /api/messages responds with 204 and message", () => {
         return supertest(app)
           .post("/api/messages")
           .send(sampleMessage)
-          // .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
           .expect(204)
-          .expect((res) => {
-            expect("message sent!");
-          });
-      });
+        });
     });
   });
 });

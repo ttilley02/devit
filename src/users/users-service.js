@@ -4,9 +4,9 @@ const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*
 
 const UsersService = {
   //service objec tot check if user name exist
-  hasUserWithUserName(db, user_name) {
-    return db("devit_users")
-      .where({ user_name })
+  hasUserWithUserName(db, nickname) {
+    return db("developit_users")
+      .where({ nickname })
       .first()
       .then((user) => !!user);
   },
@@ -14,7 +14,7 @@ const UsersService = {
   insertUser(db, newUser) {
     return db
       .insert(newUser)
-      .into("devit_users")
+      .into("developit_users")
       .returning("*")
       .then(([user]) => user);
   },
@@ -24,7 +24,7 @@ const UsersService = {
     if (password.length < 8) {
       return "Password must be longer than 8 characters";
     }
-    if (password.length > 72) {
+    if (password.length > 56) {
       return "Password must be less than 56 characters";
     }
     if (password.startsWith(" ") || password.endsWith(" ")) {
@@ -44,8 +44,6 @@ const UsersService = {
   serializeUser(user) {
     return {
       id: user.id,
-      full_name: xss(user.full_name),
-      user_name: xss(user.user_name),
       nickname: xss(user.nick_name),
       date_created: new Date(user.date_created)
     };
