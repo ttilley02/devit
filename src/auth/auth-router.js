@@ -6,8 +6,8 @@ const jsonBodyParser = express.json();
 
 //User login endpoint
 authRouter.post("/login", jsonBodyParser, (req, res, next) => {
-  const { user_name, password } = req.body;
-  const loginUser = { user_name, password };
+  const { nickname, password } = req.body;
+  const loginUser = { nickname, password };
 
   for (const [key, value] of Object.entries(loginUser))
     if (value == null)
@@ -15,13 +15,13 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         .status(400)
         .json({ error: `Missing '${key}' in request body` });
 
-//Auth Verification
-  AuthService.getUserWithUserName(req.app.get("db"), loginUser.user_name)
+  //Auth Verification
+  AuthService.getUserWithUserName(req.app.get("db"), loginUser.nickname)
     .then((dbUser) => {
       if (!dbUser || dbUser === null) {
         return res
           .status(400)
-          .json({ error: "Incorrect user_name or password" });
+          .json({ error: "Incorrect nickname or password" });
       }
 
       return AuthService.comparePassword(
@@ -31,13 +31,13 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         if (!passwordsMatch) {
           return res
             .status(400)
-            .json({ error: "Incorrect user_name or password" });
+            .json({ error: "Incorrect nickname or password" });
         }
 
-        const sub = dbUser.user_name;
+        const sub = dbUser.nickname;
         const payload = { user_id: dbUser.id };
         res.send({
-          authToken: AuthService.createJWT(sub, payload)
+          authToken: AuthService.createJWT(sub, payload),
         });
       });
     })

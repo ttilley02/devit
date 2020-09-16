@@ -5,12 +5,13 @@ const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
 usersRouter.post("/", jsonBodyParser, (req, res, next) => {
-  const { password, user_name, full_name, nickname } = req.body;
-  for (const field of ["full_name", "user_name", "password"])
+  const { password, nickname, profile } = req.body;
+
+  /*for (const field of ["password", "nickname", "profile"])
     if (!req.body[field])
       return res.status(400).json({
-        error: `Missing '${field}' in request body`
-      });
+        error: `Missing '${field}' in request body 11`,
+      });*/
 
   const passwordError = UsersService.validatePassword(password);
 
@@ -18,18 +19,17 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
 
   //check if user name is already taken
   //if not then insert said user and hash their password
-  UsersService.hasUserWithUserName(req.app.get("db"), user_name)
+  UsersService.hasUserWithUserName(req.app.get("db"), nickname, profile)
     .then((hasUserWithUserName) => {
       if (hasUserWithUserName)
         return res.status(400).json({ error: `Username already taken` });
 
       return UsersService.hashPassword(password).then((hashedPassword) => {
         const newUser = {
-          user_name,
-          password: hashedPassword,
-          full_name,
           nickname,
-          date_created: "now()"
+          password: hashedPassword,
+          date_created: "now()",
+          profile: profile,
         };
 
         return UsersService.insertUser(req.app.get("db"), newUser).then(
