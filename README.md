@@ -10,7 +10,7 @@ ENDPOINTS:
 /api/profiles
 
 ### search profiles
-/api/profiles/find
+/api/profiles/
 
 ### POST
 
