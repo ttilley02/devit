@@ -9,7 +9,11 @@ const messagesService = {
             "message.sender_id",
             "message.receiver_id"
             )
-            .where("message.sender_id" , id)
+            .where(function() {
+  this.where('sender_id', 1).orWhere('receiver_id', 'id')
+})
+})
+        
       },
     sendMessage(db, newMessage) {
     return db
