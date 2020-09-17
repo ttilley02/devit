@@ -2,9 +2,9 @@
 
 ENDPOINTS:
 
-### Profiles
+## Profiles
 
-## GET
+### GET
 
 ### all profiles
 /api/profiles
@@ -12,29 +12,29 @@ ENDPOINTS:
 ### search profiles
 /api/profiles/find
 
-## POST
+### POST
 
 ### add a profile
 /api/profiles/add
 
-## PATCH
+### PATCH
 ### update a profile
 /api/profiles
 
-### Messages
+## Messages
 
-## POST
+### POST
 ### post a message
 /api/messages
 
-## GET
+### GET
 ### get messages specific to dev/recipient
 /api/messages/myMessages
 
 
 
-### Users
-## POST
+## Users
+### POST
 ### adds a standard user profile with credentials
 /api/users
 
