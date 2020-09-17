@@ -10,11 +10,10 @@ const messagesService = {
             "message.receiver_id"
             )
             .where(function() {
-  this.where('sender_id', 1).orWhere('receiver_id', 'id')
-})
-})
-        
-      },
+               this.where('sender_id', 1).orWhere('receiver_id', 'id')
+            })
+    
+  },
     sendMessage(db, newMessage) {
     return db
       .insert(newMessage)
