@@ -101,7 +101,7 @@ offersRouter
     const id = req.params.offer_id;
     OffersService.deleteOffer(req.app.get("db"), id)
       .then((report) => {
-        res.status(200).json(report);
+        res.status(200).json({ message: "offer deleted" });
       })
       .catch(next);
   })

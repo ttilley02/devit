@@ -4,7 +4,7 @@ const helpers = require("./fixtures/test-helpers");
 
 let bearerToken;
 
-describe.only("Offers Endpoints", function () {
+describe("Offers Endpoints", function () {
   let db;
 
   const { testUsers, testOffers } = helpers.makeOffersFixtures();
@@ -31,7 +31,7 @@ describe.only("Offers Endpoints", function () {
         const alteredUsers = testUsers.filter(
           (user) => user.id !== testUsers[1].id
         );
-        helpers.seedUsers(db, alteredUsers);
+        helpers.seedUsers(db, testUsers);
         //helpers.seedOffers(db, testUsers, testOffers);
         // go through the reports, and change their user_id to this one
         return supertest(app)
@@ -171,5 +171,17 @@ describe.only("Offers Endpoints", function () {
     });
   });
 
-  describe(`DELETE /offers/:offer_id`, () => {});
+  describe(`DELETE /offers/:offer_id`, () => {
+    context(`it deletes an offer`, () => {
+      it(`deleted the offer`, () => {
+        return supertest(app)
+          .delete("/api/offers/1")
+          .set("Authorization", `Bearer ${bearerToken}`)
+          .expect(200)
+          .expect((res) => {
+            res.body.message === "offer deleted";
+          });
+      });
+    });
+  });
 });
