@@ -111,7 +111,7 @@ describe("Profile Endpoints", function () {
 
       it("GET /api/profiles responds with 200 and SEARCHED profiles", () => {
         return supertest(app)
-          .get("/api/profiles/find")
+          .get("/api/profiles/")
           .send(searchParams)
           .expect(200)
           .expect((res) => {

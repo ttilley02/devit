@@ -33,7 +33,7 @@ profilesRouter.route('/:profile_id').get(
 );
 
 profilesRouter
-  .route("/find")
+  .route("/")
   .get( requireAuth, jsonBodyParser, (req, res, next) => {
     const { skill ,skill2,skill3 } = req.body;
     const profileSearchParams = { skill,skill2,skill3 };
