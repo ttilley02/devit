@@ -1,43 +1,51 @@
-# devit
+# Developit
 
 ENDPOINTS:
 
-## Profiles
+### Profiles
 
-GET
-//all profiles
+## GET
+
+### all profiles
 /api/profiles
-//search profiles
+
+### search profiles
 /api/profiles/find
 
-POST
-//add a profile
+## POST
+
+### add a profile
 /api/profiles/add
 
-PATCH
-//update a profile
+## PATCH
+### update a profile
 /api/profiles
 
-## Messages
-POST
-//post a message
+### Messages
+
+## POST
+### post a message
 /api/messages
 
-GET
-//get messages specific to dev/recipient
+## GET
+### get messages specific to dev/recipient
 /api/messages/myMessages
+
+
+
+### Users
+## POST
+### adds a standard user profile with credentials
+/api/users
 
 
 ## Offers
 
-## Users
-POST
-//adds a standard user profile with credentials
-/api/users
+In progress
 
+## Ratings
 
-##Ratings
-
+In progres
 
 prototype deployment via heroku:
 https://mysterious-island-88920.herokuapp.com/
