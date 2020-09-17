@@ -182,5 +182,32 @@ describe("Profile Endpoints", function () {
           });
       });
     });
+
+    context("profile by ID", () => {
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+  
+
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+          .then(() => {
+            return db
+              .into("developit_profiles")
+              .insert(testProfile)
+          });
+      });
+
+      const profId = 1;
+
+      it("GET /api/profiles responds with 200 profile by ID", () => {
+        return supertest(app)
+          .get(`/api/profiles/${profId}`)
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .expect(200)
+
+      });
+    });
   });
 });

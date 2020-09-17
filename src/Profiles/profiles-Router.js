@@ -20,9 +20,21 @@ profilesRouter.route("/").get(
   }
 );
 
+profilesRouter.route('/:profile_id').get(
+  (req, res, next) => {
+   profileService
+     //service object
+     .getById(req.app.get("db"), req.params.profile_id )
+     .then((profile) => {
+       res.json(profile);
+     })
+     .catch(next);
+ }
+);
+
 profilesRouter
   .route("/find")
-  .get( jsonBodyParser, (req, res, next) => {
+  .get( requireAuth, jsonBodyParser, (req, res, next) => {
     const { skill ,skill2,skill3 } = req.body;
     const profileSearchParams = { skill,skill2,skill3 };
 
