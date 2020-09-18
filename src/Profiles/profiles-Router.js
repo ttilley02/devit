@@ -9,7 +9,7 @@ const jsonBodyParser = express.json();
 
 //get profiles from the search parameters
 profilesRouter.route("/").get(
-  /*requireAuth*/ (req, res, next) => {
+   (req, res, next) => {
     profileService
       //service object
       .getAllProfiles(req.app.get("db"))
@@ -20,9 +20,21 @@ profilesRouter.route("/").get(
   }
 );
 
+profilesRouter.route('/:profile_id').get(
+  (req, res, next) => {
+   profileService
+     //service object
+     .getById(req.app.get("db"), req.params.profile_id )
+     .then((profile) => {
+       res.json(profile);
+     })
+     .catch(next);
+ }
+);
+
 profilesRouter
-  .route("/find")
-  .get(/*requireAuth*/ jsonBodyParser, (req, res, next) => {
+  .route("/")
+  .get( requireAuth, jsonBodyParser, (req, res, next) => {
     const { skill ,skill2,skill3 } = req.body;
     const profileSearchParams = { skill,skill2,skill3 };
 
@@ -42,26 +54,62 @@ profilesRouter
       .catch(next);
   });
 
-// profilesRouter.route("/").post(requireAuth, jsonBodyParser, (req, res, next) => {
-//   const { image } = req.body;
-//   const profileSearchParams = { image };
-//   if (!image) {
-//     return res.status(400).json({
-//       error: {
-//         message: `image needed`,
-//       },
-//     });
-//   }
-//   profileService
-//   //service object
-//     .uploadImage(req.app.get("db"),profileSearchParams, req.user.id)
-//     .then(() => {
-//       return res.status(204).json({
-//         message: "image posted!"
-//       });
-//     })
-//     .catch(next);
 
-// });
+//This endpoint will shoudld be called when the user wants to add more info about themselves.
+//This would include a picture, a blurb and projects that they are associated with/working on
+profilesRouter.route("/add").post(requireAuth, jsonBodyParser, (req, res, next) => {
+  const { blurb, projects } = req.body;
+  const profileParams = { blurb, projects };
+  if (profileParams === 0) {
+    return res.status(400).json({
+      error: {
+        message: `say something about yourself!`,
+      },
+    });
+  }
+
+
+  profileParams.user_id = req.user.id;
+
+  profileService
+  //service object
+    .insertProfile(req.app.get("db"),profileParams)
+    .then(() => {
+      return res.status(204).json({
+        message: "profile posted"
+      });
+    })
+    .catch(next);
+
+});
+
+//updating an existing profile
+profilesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
+  const { blurb, projects } = req.body;
+  const profileParams = { blurb, projects };
+  if (profileParams === 0) {
+    return res.status(400).json({
+      error: {
+        message: `no changes made yet!`,
+      },
+    });
+  }
+
+
+  profileParams.user_id = req.user.id;
+
+  profileService
+  //service object
+    .updateProfile(req.app.get("db"),profileParams)
+    .then(() => {
+      return res.status(204).json({
+        message: "profile updated"
+      });
+    })
+    .catch(next);
+
+});
+
+
 
 module.exports = profilesRouter;

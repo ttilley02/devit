@@ -24,7 +24,7 @@ const UsersService = {
     if (password.length < 8) {
       return "Password must be longer than 8 characters";
     }
-    if (password.length > 72) {
+    if (password.length > 56) {
       return "Password must be less than 56 characters";
     }
     if (password.startsWith(" ") || password.endsWith(" ")) {
@@ -44,9 +44,7 @@ const UsersService = {
   serializeUser(user) {
     return {
       id: user.id,
-      nickname: xss(user.nickname),
-      password: xss(user.password),
-      profile: user.profile,
+      nickname: xss(user.nick_name),
       date_created: new Date(user.date_created),
     };
   },

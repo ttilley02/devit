@@ -111,13 +111,102 @@ describe("Profile Endpoints", function () {
 
       it("GET /api/profiles responds with 200 and SEARCHED profiles", () => {
         return supertest(app)
-          .get("/api/profiles/find")
+          .get("/api/profiles/")
           .send(searchParams)
           .expect(200)
           .expect((res) => {
             expect(res.body.blurb).to.eql(testProfile.blurb);
             expect(res.body.projects).to.eql(testProfile.projects);
           });
+      });
+    });
+    context("Add profile info the database", () => {
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+  
+
+
+      const profileParams = {
+          blurb: "check me out.  I am a great coder and I know everything",
+          projects: "Creating a MySpace clone",
+          user_id: 2
+      }
+
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+      });
+
+      it("POST /api/profiles/add responds with 204 and posted profile", () => {
+        return supertest(app)
+          .post("/api/profiles/add")
+          .send(profileParams)
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .expect(204)
+          .expect((res) => {
+            expect(res.body.blurb).to.eql(testProfile.blurb);
+            expect(res.body.projects).to.eql(testProfile.projects);
+            expect(res.body.user_id).to.eql(testProfile.user_id);
+          });
+      });
+    });
+    context("update a in the database", () => {
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+  
+
+
+      const profileParams = {
+          blurb: "I AM AN UPDATE!! LETS GET IT!!",
+          projects: "WORD PROCESSING APP",
+          user_id: 2
+      }
+
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+      });
+
+      it("PATCH /api/profiles responds with 204 and updated profile", () => {
+        return supertest(app)
+          .patch("/api/profiles/")
+          .send(profileParams)
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .expect(204)
+          .expect((res) => {
+            expect(res.body.blurb).to.eql(testProfile.blurb);
+            expect(res.body.projects).to.eql(testProfile.projects);
+            expect(res.body.user_id).to.eql(testProfile.user_id);
+          });
+      });
+    });
+
+    context("profile by ID", () => {
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+  
+
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+          .then(() => {
+            return db
+              .into("developit_profiles")
+              .insert(testProfile)
+          });
+      });
+
+      const profId = 1;
+
+      it("GET /api/profiles responds with 200 profile by ID", () => {
+        return supertest(app)
+          .get(`/api/profiles/${profId}`)
+          .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+          .expect(200)
+
       });
     });
   });

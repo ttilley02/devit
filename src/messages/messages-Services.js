@@ -7,10 +7,14 @@ const messagesService = {
           .select(
             "message.message",
             "message.sender_id",
-            "message.receiver_id"
+            "message.receiver_id",
+            "message.date_created"
             )
-            .where("message.sender_id" , id)
-      },
+            .where(function() {
+               this.where('sender_id', id).orWhere('receiver_id', id)
+            })
+    
+  },
     sendMessage(db, newMessage) {
     return db
       .insert(newMessage)
