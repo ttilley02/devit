@@ -15,7 +15,7 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         .status(400)
         .json({ error: `Missing '${key}' in request body` });
 
-//Auth Verification
+  //Auth Verification
   AuthService.getUserWithUserName(req.app.get("db"), loginUser.nickname)
     .then((dbUser) => {
       if (!dbUser || dbUser === null) {
@@ -37,7 +37,7 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         const sub = dbUser.nickname;
         const payload = { user_id: dbUser.id };
         res.send({
-          authToken: AuthService.createJWT(sub, payload)
+          authToken: AuthService.createJWT(sub, payload),
         });
       });
     })

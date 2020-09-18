@@ -5,7 +5,7 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const offersRouter = express.Router();
 const jsonBodyParser = express.json();
 
-//I replaced this delcared variable with the "req.app.get("db")" I was getting and error regarding 
+//I replaced this delcared variable with the "req.app.get("db")" I was getting and error regarding
 // referencing the "req" in req.app.get as there is no request at the beginning of the router
 
 // const database = req.app.get("db");
@@ -61,7 +61,7 @@ offersRouter
     }
 
     OffersService.updateOfferResponse(
-      database,
+      req.app.get("db"),
       req.params.offer_id,
       newResponse
     )
@@ -93,7 +93,7 @@ offersRouter
   .get((req, res, next) => {
     OffersService.getByOfferId(req.app.get("db"), req.params.offer_id)
       .then((offer) => {
-        res.status(200).json(OffersService.serializeOffer(offer));
+        res.status(200).json(offer);
       })
       .catch(next);
   })
@@ -101,7 +101,7 @@ offersRouter
     const id = req.params.offer_id;
     OffersService.deleteOffer(req.app.get("db"), id)
       .then((report) => {
-        res.status(200).json(report);
+        res.status(200).json({ message: "offer deleted" });
       })
       .catch(next);
   })
@@ -116,7 +116,7 @@ offersRouter
     }
 
     OffersService.updateOfferDetails(
-      database,
+      req.app.get("db"),
       req.params.offer_id,
       newOfferDetails
     )

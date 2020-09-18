@@ -45,9 +45,9 @@ const UsersService = {
     return {
       id: user.id,
       nickname: xss(user.nick_name),
-      date_created: new Date(user.date_created)
+      date_created: new Date(user.date_created),
     };
-  }
+  },
 };
 
 module.exports = UsersService;
