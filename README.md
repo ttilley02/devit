@@ -54,7 +54,7 @@ ENDPOINTS:
 
 #### GET /api/offers/:offer_id
 
-#### Retrieves a sepecific offer by its id
+#### Retrieves a specific offer by its id
 
 #### POST /api/offers
 
@@ -76,7 +76,7 @@ ENDPOINTS:
 
 #### GET /api/offers/:offer_id
 
-#### Retrieves a sepecific offer by its id
+#### Retrieves a specific offer by its id
 
 #### GET /api/offers/dev
 
