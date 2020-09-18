@@ -5,11 +5,6 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const offersRouter = express.Router();
 const jsonBodyParser = express.json();
 
-//I replaced this delcared variable with the "req.app.get("db")" I was getting and error regarding
-// referencing the "req" in req.app.get as there is no request at the beginning of the router
-
-// const database = req.app.get("db");
-
 // post new offer to database
 offersRouter
   .route("/")
