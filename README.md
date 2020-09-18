@@ -66,7 +66,7 @@ Retrieves all offers according to the logged in users id & the offers employer i
 
 #### PATCH /api/offers/:offer_id
 
-Will edit the offer details of a specified offer
+Will edit the offer details of a specified offer (payrate, info & details)
 
 #### DELETE /api/offers/:offer_id
 
@@ -84,7 +84,7 @@ Retrieves all offers according to the logged in users id & the offers dev id
 
 #### PATCH /api/offers/dev/:offer_id
 
-Will alter the response field only
+Will alter the response field only (Boolean)
 
 ## Ratings
 

@@ -47,7 +47,9 @@ describe("Offers Endpoints", function () {
     context(`posts an offer`, () => {
       const testOffer = {
         dev_id: 1,
-        offer_detail: "New Test Offer",
+        payrate: 35,
+        offer_info: "New Test Offer Info",
+        offer_detail: "New Test Offer Detail",
       };
 
       it(`successfully posts an offer`, () => {
@@ -59,7 +61,7 @@ describe("Offers Endpoints", function () {
           .expect((res) => {
             const postedOffer = res.body.pop();
 
-            return postedOffer.dev_id === testOffer.dev_id;
+            return postedOffer.offer_info === testOffer.offer_info;
           });
       });
     });
@@ -85,7 +87,7 @@ describe("Offers Endpoints", function () {
   describe(`PATCH /offers/dev/:offer_id`, () => {
     context(`it responds to a users offer`, () => {
       const testResponse = {
-        response: "Test Response 1",
+        response: true,
       };
 
       it(`responded to an offer`, () => {
@@ -139,12 +141,14 @@ describe("Offers Endpoints", function () {
   });
 
   describe(`PATCH /offers/:offer_id`, () => {
-    context(`it responds to a users offer`, () => {
+    context(`it updates the offer details`, () => {
       const testUpdate = {
+        payrate: 50,
+        offer_info: "Test Info Update 1",
         offer_detail: "Test Details Update 1",
       };
 
-      it(`responded to an offer`, () => {
+      it(`updated the offer`, () => {
         return supertest(app)
           .patch("/api/offers/1")
           .set("Authorization", `Bearer ${bearerToken}`)
@@ -157,6 +161,8 @@ describe("Offers Endpoints", function () {
               .first()
               .then((row) => {
                 expect(testResponse.offer_detail).to.eql(row.offer_detail);
+                expect(testResponse.offer_info).to.eql(row.offer_info);
+                expect(testResponse.payrate).to.eql(row.payrate);
               });
           });
       });
