@@ -26,14 +26,11 @@ describe("Offers Endpoints", function () {
       .post("/api/users")
       .send(testUsers[1])
       .then((createdUserRes) => {
-        // testUsers[0].id = createdUserRes.body.id; .slice(1)
-        //console.log(createdUserRes.body);
         const alteredUsers = testUsers.filter(
           (user) => user.id !== testUsers[1].id
         );
         helpers.seedUsers(db, testUsers);
-        //helpers.seedOffers(db, testUsers, testOffers);
-        // go through the reports, and change their user_id to this one
+
         return supertest(app)
           .post("/api/auth/login")
           .send(testUsers[1])
@@ -45,8 +42,6 @@ describe("Offers Endpoints", function () {
     // log that user in
     // set their bearerToken
   });
-
-  //afterEach("cleanup", () => helpers.cleanTables(db));
 
   describe(`POST /api/offers`, () => {
     context(`posts an offer`, () => {
@@ -63,7 +58,6 @@ describe("Offers Endpoints", function () {
           .expect(201)
           .expect((res) => {
             const postedOffer = res.body.pop();
-            console.log(postedOffer);
 
             return postedOffer.dev_id === testOffer.dev_id;
           });
@@ -138,7 +132,6 @@ describe("Offers Endpoints", function () {
           .set("Authorization", `Bearer ${bearerToken}`)
           .expect(200)
           .expect((res) => {
-            console.log(res.body);
             res.body.id === 1;
           });
       });
@@ -163,7 +156,6 @@ describe("Offers Endpoints", function () {
               .where({ id: 1 })
               .first()
               .then((row) => {
-                console.log(row);
                 expect(testResponse.offer_detail).to.eql(row.offer_detail);
               });
           });
