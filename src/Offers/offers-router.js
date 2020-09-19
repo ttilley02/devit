@@ -5,18 +5,13 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const offersRouter = express.Router();
 const jsonBodyParser = express.json();
 
-//I replaced this delcared variable with the "req.app.get("db")" I was getting and error regarding
-// referencing the "req" in req.app.get as there is no request at the beginning of the router
-
-// const database = req.app.get("db");
-
 // post new offer to database
 offersRouter
   .route("/")
   .all(requireAuth)
   .post(jsonBodyParser, (req, res, next) => {
-    const { dev_id, offer_detail } = req.body;
-    const newOffer = { dev_id, offer_detail };
+    const { dev_id, payrate, offer_info, offer_detail } = req.body;
+    const newOffer = { dev_id, payrate, offer_info, offer_detail };
 
     if (newOffer.dev_id == null || newOffer.offer_detail == null) {
       return res.status(400).json({
@@ -106,12 +101,16 @@ offersRouter
       .catch(next);
   })
   .patch(jsonBodyParser, (req, res, next) => {
-    const { offer_detail } = req.body;
-    const newOfferDetails = { offer_detail };
+    const { payrate, offer_info, offer_detail } = req.body;
+    const newOfferDetails = { payrate, offer_info, offer_detail };
 
-    if (newOfferDetails.offer_detail == null) {
+    if (
+      newOfferDetails.offer_detail == null ||
+      newOfferDetails.offer_info == null ||
+      newOfferDetails.payrate == null
+    ) {
       return res.status(400).json({
-        error: `Missing offer details`,
+        error: `Missing some offer details`,
       });
     }
 

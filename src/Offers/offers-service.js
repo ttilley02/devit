@@ -27,6 +27,8 @@ const OffersService = {
       date_created: offerData.date_created,
       employer_id: offerData.employer_id,
       dev_id: offerData.dev_id,
+      payrate: offerData.payrate,
+      offer_info: xss(offerData.offer_info),
       offer_detail: xss(offerData.offer_detail),
       response: xss(offerData.response),
     };

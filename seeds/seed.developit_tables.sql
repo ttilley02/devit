@@ -28,12 +28,12 @@ VALUES
     ('test 4 dev', 'im looking for work', 5),
     ('test 5 employer', 'im looking to hire devs', 6);
 
-INSERT INTO developit_offers (employer_id, dev_id, offer_detail)
+INSERT INTO developit_offers (employer_id, dev_id, payrate, offer_info, offer_detail)
 VALUES
-    (2, 1, 'Im looking to hire a SQL dev.'),
-    (4, 3, 'Im looking to hire a Java dev.'),
-    (6, 5, 'Im looking to hire a C++ dev.'),
-    (4, 1, 'Im looking to hire a Node dev.');
+    (2, 1, 60, 'Database Administrator Position', 'Im looking to hire a SQL dev.'),
+    (4, 3, 55, 'Mission Critical Java Work', 'Im looking to hire a Java dev.'),
+    (6, 5, 50, 'Entry Level C++ Dev', 'Im looking to hire a C++ dev.'),
+    (4, 1, 45, 'E-Commerce System Node/React', 'Im looking to hire a Node dev.');
 
 INSERT INTO developit_messages (sender_id, receiver_id, message)    
 VALUES 
