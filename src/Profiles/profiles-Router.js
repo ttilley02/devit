@@ -16,12 +16,15 @@ profilesRouter.route("/").get(
       .then((profiles) => {
         res.json(profiles);
       })
-      .catch(next);
+            .catch(next);
   }
 );
 
 profilesRouter.route('/:profile_id').get(
   (req, res, next) => {
+
+  
+    let result = {};
    profileService
      //service object
      .getById(req.app.get("db"), req.params.profile_id )
@@ -29,6 +32,7 @@ profilesRouter.route('/:profile_id').get(
        res.json(profile);
      })
      .catch(next);
+
  }
 );
 

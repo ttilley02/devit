@@ -19,14 +19,14 @@ VALUES
     ('Testname4', 'Testpass@4', true),
     ('Testname5', 'Testpass@5', false);
 
-INSERT INTO developit_profiles (blurb, projects, user_id) 
+INSERT INTO developit_profiles (blurb, projects, image, user_id ) 
 VALUES
-    ('I AM THE DEMO ACCOUNT IM A CODER', 'I AM LOOKING TO ACCEPT CODER JOBS', 1),
-    ('test 1 employer', 'im looking to hire developers', 2),
-    ('test 2 dev', 'im looking for work', 3),
-    ('test 3 employer', 'im looking to hire', 4),
-    ('test 4 dev', 'im looking for work', 5),
-    ('test 5 employer', 'im looking to hire devs', 6);
+    ('I AM THE DEMO ACCOUNT IM A CODER', 'I AM LOOKING TO ACCEPT CODER JOBS', 'bestimage.jpg0', 1),
+    ('test 1 employer', 'im looking to hire developers','bestimage.jpg1', 2 ),
+    ('test 2 dev', 'im looking for work', 'bestimage.jpg2', 3),
+    ('test 3 employer', 'im looking to hire', 'bestimage.jpg3', 4),
+    ('test 4 dev', 'im looking for work', 'bestimage.jpg4', 5),
+    ('test 5 employer', 'im looking to hire devs', 'bestimage.jpg5', 6);
 
 INSERT INTO developit_offers (employer_id, dev_id, payrate, offer_info, offer_detail)
 VALUES
@@ -56,17 +56,14 @@ VALUES
     ('C++'),
     ('SQL');
 
-INSERT INTO developit_user_skills (user_id, skill_name, skill_level)  
+INSERT INTO developit_user_skills (user_id, skill_name)  
 VALUES
-    (1, 'React', 'entry'),
-    (2, 'Node.js', 'entry'),
-    (3, 'Java', 'expert'),
-    (3, 'Drupal', 'mid'),
-    (3, 'C++', 'mid'),
-    (5, 'C++', 'entry'),
-    (5, 'Postgres', 'expert'),
-    (5, 'Python', 'entry'),
-    (5, 'HTML', 'expert');     
+    (5, '{{"Postgres", "expert"}, {"C++", "entry"}, {"Python", "entry"}, {"HTML", "expert"}}'),
+    (1, '{"React", "entry"}'),
+    (2, '{"Node.js", "entry"}'),
+    (3, '{{"Java", "expert"}, {"Drupal", "mid"}}');
+ 
+
 
 INSERT INTO developit_user_reviews (sender_id, receiver_id, review, rating)
 VALUES

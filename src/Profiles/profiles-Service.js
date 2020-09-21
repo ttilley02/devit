@@ -18,19 +18,37 @@ const ProfileService = {
   },
 
 
+//  skillsGroup 
+ getProfileSkillsArray(db,user) {
+    return db
+      .select(
+        "developit_user_skills.user_id",
+        db.raw('ARRAY_AGG(developit_user_skills.skill_name) as skills'))
+        .from("developit_user_skills")
+        .where("developit_user_skills.user_id", 5)
+        .groupBy("developit_user_skills.user_id");
+        
+
+  },
+
+
   getAllProfiles(db) {
     return db
       .from("developit_profiles AS profile")
       .join("developit_user_skills AS userSkills", "profile.user_id", "userSkills.user_id")
-      .select(
+      .join("developit_users AS users", "profile.user_id", "users.id")
+      .distinct(
         "profile.id",
         "profile.blurb",
         "profile.projects",
         "profile.user_id",
-        "userSkills.skill_name"
-
-      )
-        .groupBy("profile.id", "userSkills.skill_name")
+        "userSkills.skill_name",
+        "users.nickname",
+        "profile.image"
+       
+      );
+    
+      
   },
 
   insertProfile(db, profile) {
