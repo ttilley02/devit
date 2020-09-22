@@ -58,10 +58,10 @@ VALUES
 
 INSERT INTO developit_user_skills (user_id, skill_name)  
 VALUES
-    (5, '{{"Postgres", "expert"}, {"C++", "entry"}, {"Python", "entry"}, {"HTML", "expert"}}'),
-    (1, '{"React", "entry"}'),
-    (2, '{"Node.js", "entry"}'),
-    (3, '{{"Java", "expert"}, {"Drupal", "mid"}}');
+    (5, '{{"Postgres","expert"}, {"C++","entry"}, {"Python","entry"}, {"HTML","expert"}}'),
+    (1, '{{"React","entry"}}'),
+    (2, '{{"Node.js", "entry"}}'),
+    (3, '{{"Java","expert"}, {"Drupal","mid"}}');
  
 
 

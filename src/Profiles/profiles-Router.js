@@ -23,8 +23,6 @@ profilesRouter.route("/").get(
 profilesRouter.route('/:profile_id').get(
   (req, res, next) => {
 
-  
-    let result = {};
    profileService
      //service object
      .getById(req.app.get("db"), req.params.profile_id )

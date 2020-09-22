@@ -34,7 +34,7 @@ describe("Profile Endpoints", function () {
 
   describe("GET /api/profiles TEST", () => {
     context(`Given no profiles`, () => {
-      it(`responds with 200 and an empty list`, () => {
+      it(`responds with 200z and an empty list`, () => {
         return supertest(app).get("/api/profiles").expect(200, []);
       });
     });
