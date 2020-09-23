@@ -4,49 +4,50 @@ ENDPOINTS:
 
 ## Profiles
 
-### GET
+GET
+#### all profiles
+/api/profiles    
+#### search profiles
+/api/profiles/:skill/:skill2/:skill3    
+/api/profiles/user/:user_id    
 
-### all profiles
+POST
+#### add a profile
+/api/profiles/add    
 
-/api/profiles
+PATCH
+#### update a profile
+/api/profiles/:user_id    
 
-### search profiles
+## Skills
+GET
+#### search skills by user ID
+api/skills/:skill_id(will be changing to user_id in revision)  
 
-/api/profiles/
+POST
+#### add skills to a user
+api/skills/add/:user_id  
 
-### POST
+DELETE
+#### delete a users skill
+api/skills/delete/:user_id/:skill  
 
-### add a profile
-
-/api/profiles/add
-
-### PATCH
-
-### update a profile
-
-/api/profiles
+PATCH
+IN PROGRESS  
 
 ## Messages
+GET
+#### get messages
+/api/messages/myMessages  
+POST
+#### send message
+/api/messages/  
 
-### POST
-
-### post a message
-
-/api/messages
-
-### GET
-
-### get messages specific to dev/recipient
-
-/api/messages/myMessages
 
 ## Users
-
-### POST
-
-### adds a standard user profile with credentials
-
-/api/users
+POST
+#### adds a standard user profile with credentials
+/api/users  
 
 ## Offers
 
