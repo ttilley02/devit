@@ -13,7 +13,6 @@ TRUNCATE
 
 INSERT INTO developit_users (nickname, password, profile)
 VALUES
-<<<<<<< HEAD
     ('Demo', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', true ),
     ('Testname1', '$2a$12$Rnk30PlaoMJC2X3XdU0vDuqmS7qghoCaVzjAv91EaEri1FEnl1STi', false),
     ('Testname2', '$2a$12$dsEVWnhGBVRt8V1cwTxXMOC9Q/0IU7B1m1orWGKoon7OeCYrAt5SK', true),
@@ -21,18 +20,6 @@ VALUES
     ('Testname4', '$2a$12$L8VxUlB7AMrBTc.5IA8gT.FrDJx2d2H9EgFnO4cyl2878evL.iq8u', true),
     ('Testname5', '$2a$12$R4jTdJbeRZPENyoB/h3IDO3CEptCxggct3y2sHYhRpKe4/udpbnR6', false);
    
-=======
-    ('Demo', 'password', true ),
-    ('Testname1', 'Testpass@1', false),
-    ('Testname2', 'Testpass@2', true),
-    ('Testname3', 'Testpass@3', false),
-    ('Testname4', 'Testpass@4', true),
-    ('Testname5', 'Testpass@5', false),
-    ('Testname6', 'Testpass@1', false),
-    ('Testname7', 'Testpass@2', true),
-    ('Testname8', 'Testpass@3', false),
-    ('Testname9', 'Testpass@4', true);
->>>>>>> 5ac02cef16db651d03559cf56f33633222be6597
 
 INSERT INTO developit_profiles (blurb, projects, image, user_id ) 
 VALUES
