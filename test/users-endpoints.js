@@ -33,6 +33,7 @@ describe('Users Endpoints', function() {
     db.raw(
       "TRUNCATE developit_users, developit_profiles, developit_skills, developit_user_skills RESTART IDENTITY CASCADE"
     )
+
   );
 
 

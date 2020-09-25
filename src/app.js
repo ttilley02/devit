@@ -10,6 +10,7 @@ const offersRouter = require("./Offers/offers-router");
 const profilesRouter = require("./Profiles/profiles-Router");
 const messagesRouter = require("./messages/messages-Router");
 const UserRatingsRouter = require("./Ratings/User-Ratings");
+const skillsRouter = require("./skills/skills-router");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use("/api/profiles", profilesRouter);
 app.use("/api/offers", offersRouter);
 app.use("/api/messages", messagesRouter);
 app.use("/api/reviews",UserRatingsRouter);
+app.use("/api/skills",skillsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

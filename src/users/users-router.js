@@ -1,3 +1,4 @@
+const { json } = require("express");
 const express = require("express");
 const path = require("path");
 const UsersService = require("./users-service");
@@ -44,5 +45,18 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
     })
     .catch(next);
 });
+
+
+
+usersRouter.get('/',jsonBodyParser,(req, res, next)=>{
+  UsersService.getUsers(req.app.get('db'))
+  .then((user) => {
+    res.json(user);
+  })
+  .catch(next);
+})
+
+
+
 
 module.exports = usersRouter;

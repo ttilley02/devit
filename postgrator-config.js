@@ -1,5 +1,5 @@
 require('dotenv').config();
-// require('dotenv').config({ path: '/Users/marlo/devit/.env' })
+
 console.log(process.env.DATABASE_URL)
 
 module.exports = {

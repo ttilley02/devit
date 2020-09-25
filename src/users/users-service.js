@@ -1,8 +1,14 @@
 const xss = require("xss");
 const bcrypt = require("bcryptjs");
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
+const profileService = require('../Profiles/profiles-Service')
 
 const UsersService = {
+  //get a customized user object that has all elements in it.
+  getUsers(db) {
+    const profiles = (profileService.getAllProfiles(db))
+    return profiles
+  },
   //service objec tot check if user name exist
   hasUserWithUserName(db, nickname) {
     return db("developit_users")
