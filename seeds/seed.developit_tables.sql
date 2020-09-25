@@ -12,12 +12,13 @@ TRUNCATE
 
 INSERT INTO developit_users (nickname, password, profile)
 VALUES
-    ('Demo', 'password', true ),
-    ('Testname1', 'Testpass@1', false),
-    ('Testname2', 'Testpass@2', true),
-    ('Testname3', 'Testpass@3', false),
-    ('Testname4', 'Testpass@4', true),
-    ('Testname5', 'Testpass@5', false);
+    ('Demo', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', true ),
+    ('Testname1', '$2a$12$Rnk30PlaoMJC2X3XdU0vDuqmS7qghoCaVzjAv91EaEri1FEnl1STi', false),
+    ('Testname2', '$2a$12$dsEVWnhGBVRt8V1cwTxXMOC9Q/0IU7B1m1orWGKoon7OeCYrAt5SK', true),
+    ('Testname3', '$2a$12$CYn.l7TSgHiYBugpfDLZTuq.24ngR2m46UyTZltZUbwnk2o2J5vuS', false),
+    ('Testname4', '$2a$12$L8VxUlB7AMrBTc.5IA8gT.FrDJx2d2H9EgFnO4cyl2878evL.iq8u', true),
+    ('Testname5', '$2a$12$R4jTdJbeRZPENyoB/h3IDO3CEptCxggct3y2sHYhRpKe4/udpbnR6', false);
+   
 
 INSERT INTO developit_profiles (blurb, projects, user_id) 
 VALUES
