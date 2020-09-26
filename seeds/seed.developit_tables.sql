@@ -25,7 +25,7 @@ BEGIN;
     INSERT INTO developit_profiles
         (blurb, projects, image, user_id )
     VALUES
-        ('test 1 employer', 'https://i.imgur.com/2GRjjkh.jpg', 1),
+        ('test 1 employer', 'im looking for work', 'https://i.imgur.com/2GRjjkh.jpg', 1),
         ('test 2 employer', 'im looking to hire developers', 'tests.jpeg4', 2),
         ('test 3 dev', 'im looking for work', 'https://i.imgur.com/g2bIsjB.jpeg', 3),
         ('test 4 employer', 'im looking to hire', 'https://i.imgur.com/1iP19yP.jpg', 4),
