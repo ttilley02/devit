@@ -1,4 +1,5 @@
-CREATE TABLE developit_users (
+CREATE TABLE developit_users
+(
     id SERIAL PRIMARY KEY,
     nickname TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
