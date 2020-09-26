@@ -5,28 +5,21 @@ const jsonBodyParser = express.json();
 const ProfileService = {
    getProfiles(db, s1, s2, s3) {
       return db
-         .from("developit_user_skills")
-         .join(
-            "developit_profiles",
-            "developit_profiles.id",
-            "developit_user_skills.user_id"
-         )
-         .distinct(
-            "developit_profiles.user_id",
-            db.raw("array_agg(skill_name ) as skills"),
-            db.raw("array_agg(skill_level ) as level"),
-            "developit_profiles.image"
-         )
-         .groupBy(
-            "developit_profiles.id",
-            "developit_profiles.blurb",
-            "developit_profiles.projects",
-            "developit_profiles.user_id",
-            "developit_profiles.image"
-         )
-         .where("developit_user_skills.skill_name", s1)
-         .orWhere("developit_user_skills.skill_name", s2)
-         .orWhere("developit_user_skills.skill_name", s3);
+         .from("developit_user_skills as skills")
+         .select("skills.user_id")
+         .where("skills.skill_name", s1)
+         .orWhere("skills.skill_name", s2)
+         .orWhere("skills.skill_name", s3)
+         .then((res) => {
+            const userListing = [];
+            res.forEach((res) => {
+               userListing.push(res.user_id);
+            });
+            return ProfileService.getAllProfiles(db).whereIn(
+               "developit_profiles.user_id",
+               userListing
+            );
+         });
    },
 
    getAllProfiles(db) {

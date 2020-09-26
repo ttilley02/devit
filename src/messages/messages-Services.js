@@ -17,23 +17,22 @@ const messagesService = {
          });
    },
    sendMessage(db, newMessage) {
-      const senderImage = db
+      return db
          .from("developit_profiles as profile")
          .select("profile.image")
          .where("profile.user_id", newMessage.sender_id)
          .returning("*")
-         .then(([image]) => image)
-         .then((image) => {
-            newMessage.image = image;
+         .then(([res]) => res)
+         .then((res) => {
+            newMessage.image = res.image;
+            db.insert(newMessage)
+               .into("developit_messages")
+               .returning("*")
+               .then(([message]) => message)
+               .then((message) =>
+                  console.log(messagesService.getById(db, message.sender_id))
+               );
          });
-
-      console.log(senderImage);
-      return db
-         .insert(newMessage)
-         .into("developit_messages")
-         .returning("*")
-         .then(([message]) => message)
-         .then((message) => messagesService.getById(db, message.sender_id));
    },
 };
 

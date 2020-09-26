@@ -32,7 +32,7 @@ profilesRouter
 
 profilesRouter
    .route("/:skill/:skill2/:skill3")
-   .get(requireAuth, jsonBodyParser, (req, res, next) => {
+   .get(jsonBodyParser, (req, res, next) => {
       profileService
          //service object
          .getProfiles(
