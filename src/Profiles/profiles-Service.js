@@ -29,6 +29,7 @@ const ProfileService = {
             "developit_profiles.blurb",
             "developit_profiles.projects",
             "developit_profiles.user_id",
+            "developit_users.nickname",
             db.raw("array_agg(skill_name) as skills"),
             db.raw("array_agg(skill_level) as level"),
             "developit_profiles.image"
@@ -39,13 +40,19 @@ const ProfileService = {
             "developit_profiles.user_id",
             "developit_user_skills.user_id"
          )
+         .join(
+            "developit_users",
+            "developit_users.id",
+            "developit_user_skills.user_id"
+         )
 
          .groupBy(
             "developit_profiles.id",
             "developit_profiles.blurb",
             "developit_profiles.projects",
             "developit_profiles.user_id",
-            "developit_profiles.image"
+            "developit_profiles.image",
+            "developit_users.nickname"
          );
    },
 
