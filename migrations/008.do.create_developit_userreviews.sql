@@ -1,4 +1,5 @@
-CREATE TABLE developit_user_reviews (
+CREATE TABLE developit_user_reviews
+(
     id SERIAL PRIMARY KEY,
     date_created TIMESTAMPTZ NOT NULL DEFAULT now(),
     sender_id INTEGER

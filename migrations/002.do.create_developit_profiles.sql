@@ -1,4 +1,5 @@
-CREATE TABLE developit_profiles (
+CREATE TABLE developit_profiles
+(
     id SERIAL PRIMARY KEY,
     blurb TEXT,
     projects TEXT,

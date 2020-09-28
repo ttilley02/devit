@@ -60,77 +60,77 @@ describe("Offers Endpoints", function () {
           });
       });
     });
-  });
 
-  describe(`GET /offers/dev`, () => {
-    context(
-      `it retrieves a users offers based on dev_id & logged in user`,
-      () => {
-        it(`retrieved dev offers`, () => {
-          return supertest(app)
-            .get("/api/offers/dev")
-            .set("Authorization", `Bearer ${bearerToken}`)
-            .expect(200)
-            .expect((res) => {
-              testUsers[1].id === res.body.dev_id;
-            });
-        });
-      }
-    );
-  });
-
-  describe(`PATCH /offers/dev/:offer_id`, () => {
-    context(`it responds to a users offer`, () => {
-      const testResponse = {
-        response: true,
-      };
-
-      it(`responded to an offer`, () => {
-        return supertest(app)
-          .patch("/api/offers/dev/1")
-          .set("Authorization", `Bearer ${bearerToken}`)
-          .send(testResponse)
-          .expect(204)
-          .expect((res) => {
-            db.from("developit_offers")
-              .select("*")
-              .where({ id: 1 })
-              .first()
-              .then((row) => {
-                expect(testResponse.response).to.eql(row.response);
+    describe(`GET /offers/dev`, () => {
+      context(
+        `it retrieves a users offers based on dev_id & logged in user`,
+        () => {
+          it(`retrieved dev offers`, () => {
+            return supertest(app)
+              .get("/api/offers/dev")
+              .set("Authorization", `Bearer ${bearerToken}`)
+              .expect(200)
+              .expect((res) => {
+                testUsers[1].id === res.body.dev_id;
               });
           });
+        }
+      );
+    });
+
+    describe(`PATCH /offers/dev/:offer_id`, () => {
+      context(`it responds to a users offer`, () => {
+        const testResponse = {
+          response: true,
+        };
+
+        it(`responded to an offer`, () => {
+          return supertest(app)
+            .patch("/api/offers/dev/1")
+            .set("Authorization", `Bearer ${bearerToken}`)
+            .send(testResponse)
+            .expect(204)
+            .expect((res) => {
+              db.from("developit_offers")
+                .select("*")
+                .where({ id: 1 })
+                .first()
+                .then((row) => {
+                  expect(testResponse.response).to.eql(row.response);
+                });
+            });
+        });
       });
     });
-  });
 
-  describe(`GET /offers/emp`, () => {
-    context(
-      `it retrieves a users offers based on employer_id & logged in user`,
-      () => {
-        it(`retrieved employer offers`, () => {
+    describe(`GET /offers/emp`, () => {
+      context(
+        `it retrieves a users offers based on employer_id & logged in user`,
+        () => {
+          it(`retrieved employer offers`, () => {
+            return supertest(app)
+              .get("/api/offers/emp")
+              .set("Authorization", `Bearer ${bearerToken}`)
+              .expect(200)
+              .expect((res) => {
+                testUsers[1].id === res.body.employer_id;
+              });
+          });
+        }
+      );
+    });
+
+    describe(`GET /offers/:offer_id`, () => {
+      context(`it retrieves an offer based on its id`, () => {
+        it(`retrieves the correct offer`, () => {
           return supertest(app)
-            .get("/api/offers/emp")
+            .get("/api/offers/1")
             .set("Authorization", `Bearer ${bearerToken}`)
             .expect(200)
             .expect((res) => {
-              testUsers[1].id === res.body.employer_id;
+              res.body.id === 1;
             });
         });
-      }
-    );
-  });
-
-  describe(`GET /offers/:offer_id`, () => {
-    context(`it retrieves an offer based on its id`, () => {
-      it(`retrieves the correct offer`, () => {
-        return supertest(app)
-          .get("/api/offers/1")
-          .set("Authorization", `Bearer ${bearerToken}`)
-          .expect(200)
-          .expect((res) => {
-            res.body.id === 1;
-          });
       });
     });
   });
