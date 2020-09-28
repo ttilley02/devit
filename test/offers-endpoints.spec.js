@@ -7,7 +7,7 @@ let bearerToken;
 describe("Offers Endpoints", function () {
   let db;
 
-  const { testUsers, testOffers } = helpers.makeOffersFixtures();
+  const { testUsers } = helpers.makeOffersFixtures();
 
   before("make knex instance", () => {
     db = knex({
@@ -19,18 +19,15 @@ describe("Offers Endpoints", function () {
 
   after("disconnect from db", () => db.destroy());
 
-  before("cleanup", () => helpers.cleanTables(db));
+  before("cleanup", () => {
+    helpers.cleanTables(db);
+  });
 
   beforeEach("authorization", () => {
     return supertest(app)
       .post("/api/users")
       .send(testUsers[1])
       .then((createdUserRes) => {
-        const alteredUsers = testUsers.filter(
-          (user) => user.id !== testUsers[1].id
-        );
-        helpers.seedUsers(db, testUsers);
-
         return supertest(app)
           .post("/api/auth/login")
           .send(testUsers[1])
@@ -39,8 +36,6 @@ describe("Offers Endpoints", function () {
             return true;
           });
       });
-    // log that user in
-    // set their bearerToken
   });
 
   describe(`POST /api/offers`, () => {
@@ -142,7 +137,7 @@ describe("Offers Endpoints", function () {
 
   describe(`PATCH /offers/:offer_id`, () => {
     context(`it updates the offer details`, () => {
-      const testUpdate = {
+      const testResponse = {
         payrate: 50,
         offer_info: "Test Info Update 1",
         offer_detail: "Test Details Update 1",
@@ -152,7 +147,7 @@ describe("Offers Endpoints", function () {
         return supertest(app)
           .patch("/api/offers/1")
           .set("Authorization", `Bearer ${bearerToken}`)
-          .send(testUpdate)
+          .send(testResponse)
           .expect(204)
           .expect((res) => {
             db.from("developit_offers")

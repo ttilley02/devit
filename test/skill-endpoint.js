@@ -39,51 +39,50 @@ describe.only("skill Endpoints", function () {
       });
     });
     context("Given there are skills in the database", () => {
-        const testUsers = makeUsersArray();
-        const testProfile = makeProfilesArray();
-        const testSkills = makeSkillsArray();
-        const testUserSkills = makeUserSkillsArray();
+      const testUsers = makeUsersArray();
+      const testProfile = makeProfilesArray();
+      const testSkills = makeSkillsArray();
+      const testUserSkills = makeUserSkillsArray();
 
-        
-  
-        beforeEach("insert users", () => {
-          return db
-            .into("developit_users")
-            .insert(testUsers)
-            .then(() => {
-              return db
-                .into("developit_profiles")
-                .insert(testProfile)
-                .then(() => {
-                  return db
-                    .into("developit_skills")
-                    .insert(testSkills)
-                    .then(() => {
-                      return db
-                        .into("developit_user_skills")
-                        .insert(testUserSkills)
-    
-                    });
-
-                });
-            });
-        });
-
-
-
-        it("GET /api/skills/:id responds with 200 and profiles", () => {
-          const testSkill = {user_id:1,skill_name:[["GGG","entry"],["JJJ","expert"],["LLL","mid"]]}
-          return supertest(app)
-            .get(`/api/skills/${testSkill.user_id}`)
-            .expect(200)
-            .expect((res) => {
-              expect(res.body.skill_name[0][0]).to.eql(testSkill.skill_name[0][0]);
-         
-            });
-        });
+      beforeEach("insert users", () => {
+        return db
+          .into("developit_users")
+          .insert(testUsers)
+          .then(() => {
+            return db
+              .into("developit_profiles")
+              .insert(testProfile)
+              .then(() => {
+                return db
+                  .into("developit_skills")
+                  .insert(testSkills)
+                  .then(() => {
+                    return db
+                      .into("developit_user_skills")
+                      .insert(testUserSkills);
+                  });
+              });
+          });
       });
 
-
-
+      it("GET /api/skills/:id responds with 200 and profiles", () => {
+        const testSkill = {
+          user_id: 1,
+          skill_name: [
+            ["GGG", "entry"],
+            ["JJJ", "expert"],
+            ["LLL", "mid"],
+          ],
+        };
+        return supertest(app)
+          .get(`/api/skills/${testSkill.user_id}`)
+          .expect(200)
+          .expect((res) => {
+            expect(res.body.skill_name[0][0]).to.eql(
+              testSkill.skill_name[0][0]
+            );
+          });
+      });
+    });
   });
 });
