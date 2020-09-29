@@ -49,8 +49,9 @@ const UsersService = {
    //serialization when needed.  Remember that test may need this added as well.
    serializeUser(user) {
       return {
+         profile: user.profile,
          id: user.id,
-         nickname: xss(user.nick_name),
+         nickname: xss(user.nickname),
          date_created: new Date(user.date_created),
       };
    },
