@@ -52,8 +52,8 @@ profilesRouter
 profilesRouter
   .route("/add")
   .post(requireAuth, jsonBodyParser, (req, res, next) => {
-    const { blurb, projects, image } = req.body;
-    const profileParams = { blurb, projects, image };
+    const { dev_blurb, emp_blurb, image } = req.body;
+    const profileParams = { dev_blurb, emp_blurb, image };
     if (profileParams === 0) {
       return res.status(400).json({
         error: {
@@ -79,8 +79,8 @@ profilesRouter
 profilesRouter
   .route("/:user_id")
   .patch(requireAuth, jsonBodyParser, (req, res, next) => {
-    const { blurb, projects } = req.body;
-    const profileParams = { blurb, projects };
+    const { dev_blurb, emp_blurb, image } = req.body;
+    const profileParams = { dev_blurb, emp_blurb, image };
     if (profileParams === 0) {
       return res.status(400).json({
         error: {
