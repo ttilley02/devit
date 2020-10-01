@@ -30,7 +30,7 @@ const messagesService = {
                .returning("*")
                .then(([message]) => message)
                .then((message) =>
-                  console.log(messagesService.getById(db, message.sender_id))
+                  messagesService.getById(db, message.sender_id)
                );
          });
    },
