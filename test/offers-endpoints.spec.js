@@ -4,7 +4,7 @@ const helpers = require("./fixtures/test-helpers");
 
 let bearerToken;
 
-describe("Offers Endpoints", function () {
+describe.only("Offers Endpoints", function () {
    let db;
 
    const { testUsers } = helpers.makeOffersFixtures();

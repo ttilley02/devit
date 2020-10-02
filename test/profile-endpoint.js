@@ -133,6 +133,10 @@ describe("Profile Endpoints", function () {
          });
 
          it("POST /api/profiles/add responds with 204 and posted profile", () => {
+            console.log(
+               "Authorization",
+               authHelper.makeAuthHeader(testUsers[0])
+            );
             return supertest(app)
                .post("/api/profiles/add")
                .send(profileParams)

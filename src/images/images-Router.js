@@ -16,7 +16,7 @@ imagesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
 
    //service object to post note
    imageService
-      .postImage(req.app.get("db"), newImageFields)
+      .updateImage(req.app.get("db"), newImageFields)
       .then(() => {
          return res.status(204).json({
             image: "image uploaded",
