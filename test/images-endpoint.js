@@ -30,7 +30,7 @@ describe("image Endpoints", function () {
       )
    );
 
-   describe("POST /api/images TEST", () => {
+   describe("PATCH /api/images TEST", () => {
       context("sending a image should yield...", () => {
          const testUsers = makeUsersArray();
          const testProfile = makeProfilesArray();
@@ -45,18 +45,13 @@ describe("image Endpoints", function () {
                .into("developit_users")
                .insert(testUsers)
                .then(() => {
-                  return db
-                     .into("developit_profiles")
-                     .insert(testProfile)
-                     .then(() => {
-                        return db.into("developit_images").insert(testimages);
-                     });
+                  return db.into("developit_profiles").insert(testProfile);
                });
          });
 
-         it("POST /api/images responds with 204 and image", () => {
+         it("update /api/images responds with 204 and image", () => {
             return supertest(app)
-               .post("/api/images")
+               .patch("/api/images")
                .send(sampleimage)
                .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                .expect(204);

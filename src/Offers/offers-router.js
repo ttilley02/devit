@@ -10,8 +10,22 @@ offersRouter
    .route("/")
    .all(requireAuth)
    .post(jsonBodyParser, (req, res, next) => {
-      const { dev_id, payrate, offer_info, offer_detail } = req.body;
-      const newOffer = { dev_id, payrate, offer_info, offer_detail };
+      const {
+         dev_id,
+         payrate,
+         offer_info,
+         offer_detail,
+         image,
+         emp_name,
+      } = req.body;
+      const newOffer = {
+         dev_id,
+         payrate,
+         offer_info,
+         offer_detail,
+         image,
+         emp_name,
+      };
 
       if (newOffer.dev_id == null || newOffer.offer_detail == null) {
          return res.status(400).json({

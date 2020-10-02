@@ -8,15 +8,15 @@ const imagesRouter = express.Router();
 const jsonBodyParser = express.json();
 
 //Add a image
-imagesRouter.route("/").post(requireAuth, jsonBodyParser, (req, res, next) => {
-   const { imageLink } = req.body;
-   const newImageFields = { imageLink };
+imagesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
+   const { image } = req.body;
+   const newImageFields = { image };
 
-   newImageFields.sender_id = req.user.id;
+   newImageFields.user_id = req.user.id;
 
    //service object to post note
    imageService
-      .postimage(req.app.get("db"), newImageFields)
+      .updateImage(req.app.get("db"), newImageFields)
       .then(() => {
          return res.status(204).json({
             image: "image uploaded",

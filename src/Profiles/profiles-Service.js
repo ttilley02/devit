@@ -26,8 +26,8 @@ const ProfileService = {
       return db
          .select(
             "developit_profiles.id",
-            "developit_profiles.blurb",
-            "developit_profiles.projects",
+            "developit_profiles.dev_blurb",
+            "developit_profiles.emp_blurb",
             "developit_profiles.user_id",
             "developit_users.nickname",
             db.raw("array_agg(skill_name) as skills"),
@@ -48,8 +48,8 @@ const ProfileService = {
 
          .groupBy(
             "developit_profiles.id",
-            "developit_profiles.blurb",
-            "developit_profiles.projects",
+            "developit_profiles.dev_blurb",
+            "developit_profiles.emp_blurb",
             "developit_profiles.user_id",
             "developit_profiles.image",
             "developit_users.nickname"
@@ -72,11 +72,31 @@ const ProfileService = {
    },
 
    updateProfile(db, newProfileFields) {
-      console.log(newProfileFields);
-
       return db("developit_profiles as profile")
          .where("profile.user_id", newProfileFields.user_id)
          .update(newProfileFields);
+   },
+
+   getAllProjects(db) {
+      return db.from("developit_user_projects as offers").select("*");
+   },
+
+   insertProject(db, project) {
+      return db
+         .insert(project)
+         .into("developit_user_projects")
+         .returning("*")
+         .then(([project]) => project)
+         .then((project) =>
+            ProfileService.getProjectsByDevId(db, project.dev_id)
+         );
+   },
+
+   getProjectsByDevId(db, id) {
+      return ProfileService.getAllProjects(db).where(
+         "developit_user_projects.dev_id",
+         id
+      );
    },
 };
 
