@@ -4,7 +4,7 @@ const helpers = require("./fixtures/test-helpers");
 
 let bearerToken;
 
-describe("Offers Endpoints", function () {
+describe.only("Offers Endpoints", function () {
   let db;
 
   const { testUsers } = helpers.makeOffersFixtures();
@@ -158,7 +158,6 @@ describe("Offers Endpoints", function () {
                 expect(testResponse.offer_detail).to.eql(row.offer_detail);
                 expect(testResponse.offer_info).to.eql(row.offer_info);
                 expect(testResponse.payrate).to.eql(row.payrate);
-                console.log(row);
               });
           });
       });

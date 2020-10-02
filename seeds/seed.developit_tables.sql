@@ -23,14 +23,14 @@ BEGIN;
 
 
     INSERT INTO developit_profiles
-        (blurb, projects, image, user_id )
+        (dev_blurb, emp_blurb, image, user_id )
     VALUES
-        ('test 1 employer', 'im looking for work', 'https://i.imgur.com/2GRjjkh.jpg', 1),
-        ('test 2 employer', 'im looking to hire developers', 'tests.jpeg4', 2),
-        ('test 3 dev', 'im looking for work', 'https://i.imgur.com/g2bIsjB.jpeg', 3),
-        ('test 4 employer', 'im looking to hire', 'https://i.imgur.com/1iP19yP.jpg', 4),
-        ('test 5 dev', 'im looking for work', 'tests.jpeg6', 5),
-        ('test 6 employer', 'im looking to hire devs', 'https://i.imgur.com/lKZb6wy.jpg', 6);
+        ('cool guy looking for FAANG', 'looking to hire someone for my team', 'https://i.imgur.com/2GRjjkh.jpg', 1),
+        ('sick programmer in gaming', 'not looking to hire anyone', 'tests.jpeg4', 2),
+        ('Im doing everything for SPACEX', 'come join my team!', 'https://i.imgur.com/g2bIsjB.jpeg', 3),
+        ('EBAY for life', 'im looking to hire', 'https://i.imgur.com/1iP19yP.jpg', 4),
+        ('Worked with Napster', 'not looking', 'tests.jpeg6', 5),
+        ('Coded Google facebook clone', 'need someone to help clone Amazon with me', 'https://i.imgur.com/lKZb6wy.jpg', 6);
 
     INSERT INTO developit_offers
         (employer_id, dev_id, payrate, offer_info, offer_detail)

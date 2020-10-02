@@ -45,7 +45,7 @@ describe("Users Endpoints", function () {
         const registerAttemptBody = {
           nickname: "test nickname",
           password: "test password",
-          nickname: "test nickname",
+          profile: true,
         };
 
         it(`responds with 400 required error when '${field}' is missing`, () => {
@@ -63,6 +63,7 @@ describe("Users Endpoints", function () {
         const userShortPassword = {
           nickname: "test nickname",
           password: "1234567",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
@@ -75,6 +76,7 @@ describe("Users Endpoints", function () {
         const userLongPassword = {
           nickname: "test nickname",
           password: "*".repeat(73),
+          profile: true,
         };
 
         return supertest(app)
@@ -88,6 +90,7 @@ describe("Users Endpoints", function () {
         const userPasswordStartsSpaces = {
           nickname: "test nickname",
           password: " 1Aa!2Bb@",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
@@ -100,6 +103,7 @@ describe("Users Endpoints", function () {
         const userPasswordEndsSpaces = {
           nickname: "test nickname",
           password: "1Aa!2Bb@ ",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
@@ -112,6 +116,7 @@ describe("Users Endpoints", function () {
         const userPasswordNotComplex = {
           nickname: "test nickname",
           password: "11AAaabb",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
@@ -125,6 +130,7 @@ describe("Users Endpoints", function () {
         const duplicateUser = {
           nickname: testUser.nickname,
           password: "11AAaa!!",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
@@ -137,6 +143,7 @@ describe("Users Endpoints", function () {
         const newUser = {
           nickname: "test nickname",
           password: "11AAaa!!",
+          profile: true,
         };
         return supertest(app)
           .post("/api/users")
