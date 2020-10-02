@@ -44,18 +44,6 @@ offersRouter
 
 // get all offers specific to dev/recipient
 offersRouter
-<<<<<<< HEAD
-   .route("/dev")
-   .all(requireAuth)
-   .get((req, res, next) => {
-     console.log(req.user.id);
-      OffersService.getByDevId(req.app.get("db"), req.user.id)
-         .then((offers) => {
-            res.status(200).json(OffersService.serializeOffers(offers));
-         })
-         .catch(next);
-   });
-=======
   .route("/dev")
   .all(requireAuth)
   .get((req, res, next) => {
@@ -65,7 +53,6 @@ offersRouter
       })
       .catch(next);
   });
->>>>>>> 41966f489bad9c9ce358d1801e0bea3e15167f63
 
 // route for devs to create response to offer ..this patch only edits response
 offersRouter
@@ -109,39 +96,6 @@ offersRouter
 // can use offer id specific get or emp/dev endpoints
 // intended for the delete & patch to only be used by employers ..this patch only edits offer details
 offersRouter
-<<<<<<< HEAD
-   .route("/:offer_id")
-   .all(requireAuth)
-   .all(checkForOffer)
-   .get((req, res, next) => {
-      OffersService.getByOfferId(req.app.get("db"), req.params.offer_id)
-         .then((offer) => {
-            res.status(200).json(offer);
-         })
-         .catch(next);
-   })
-   .delete((req, res, next) => {
-      const id = req.params.offer_id;
-      OffersService.deleteOffer(req.app.get("db"), id)
-         .then((report) => {
-            res.status(200).json({ message: "offer deleted" });
-         })
-         .catch(next);
-   })
-   .patch(jsonBodyParser, (req, res, next) => {
-      const { payrate, offer_info, offer_detail, dev_id, response } = req.body;
-      const newOfferDetails = { payrate, offer_info, offer_detail, dev_id, response };
-
-      if (
-         newOfferDetails.offer_detail == null ||
-         newOfferDetails.offer_info == null ||
-         newOfferDetails.payrate == null
-      ) {
-         return res.status(400).json({
-            error: `Missing some offer details`,
-         });
-      }
-=======
   .route("/:offer_id")
   .all(requireAuth)
   .all(checkForOffer)
@@ -163,7 +117,6 @@ offersRouter
   .patch(jsonBodyParser, (req, res, next) => {
     const { payrate, offer_info, offer_detail, response } = req.body;
     const newOfferDetails = { payrate, offer_info, offer_detail, response };
->>>>>>> 41966f489bad9c9ce358d1801e0bea3e15167f63
 
     if (
       newOfferDetails.offer_detail == null ||
