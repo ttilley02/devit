@@ -6,7 +6,7 @@ const { makeProfilesArray } = require("./fixtures/profiles.fixtures");
 const { makeMessagesArray } = require("./fixtures/messages.fixtures");
 const authHelper = require("./authHelper");
 
-describe.only("message Endpoints", function () {
+describe("message Endpoints", function () {
   let db;
 
   before("make knex instance", () => {
