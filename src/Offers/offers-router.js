@@ -33,6 +33,7 @@ offersRouter
    .route("/dev")
    .all(requireAuth)
    .get((req, res, next) => {
+     console.log(req.user.id);
       OffersService.getByDevId(req.app.get("db"), req.user.id)
          .then((offers) => {
             res.status(200).json(OffersService.serializeOffers(offers));
@@ -101,8 +102,8 @@ offersRouter
          .catch(next);
    })
    .patch(jsonBodyParser, (req, res, next) => {
-      const { payrate, offer_info, offer_detail } = req.body;
-      const newOfferDetails = { payrate, offer_info, offer_detail };
+      const { payrate, offer_info, offer_detail, dev_id, response } = req.body;
+      const newOfferDetails = { payrate, offer_info, offer_detail, dev_id, response };
 
       if (
          newOfferDetails.offer_detail == null ||
