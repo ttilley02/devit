@@ -4,13 +4,15 @@ function makeUsersArray() {
          id: 1,
          nickname: "testperson1",
          profile: true,
-         password: "password",
+         password:
+            "$2a$12$Rnk30PlaoMJC2X3XdU0vDuqmS7qghoCaVzjAv91EaEri1FEnl1STi",
       },
       {
          id: 2,
          nickname: "testperson2",
          profile: true,
-         password: "password",
+         password:
+            "$2a$12$dsEVWnhGBVRt8V1cwTxXMOC9Q/0IU7B1m1orWGKoon7OeCYrAt5SK",
       },
       {
          id: 3,

@@ -12,7 +12,7 @@ CREATE TABLE developit_offers
     offer_info TEXT
         NOT NULL,
     offer_detail TEXT NOT NULL,
-    response BOOLEAN DEFAULT false,
+    response text,
     image text,
     emp_name text,
     date_created TIMESTAMPTZ NOT NULL DEFAULT now

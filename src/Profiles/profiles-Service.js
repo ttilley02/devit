@@ -56,13 +56,37 @@ const ProfileService = {
          );
    },
 
+   getProfileOnly(db) {
+      return db
+         .from("developit_profiles")
+         .join(
+            "developit_users",
+            "developit_users.id",
+            "developit_profiles.user_id"
+         )
+         .select(
+            "developit_profiles.id",
+            "developit_profiles.dev_blurb",
+            "developit_profiles.emp_blurb",
+            "developit_users.nickname",
+            "developit_profiles.image"
+         );
+   },
+
    getById(db, id) {
       return ProfileService.getAllProfiles(db)
          .where("developit_profiles.user_id", id)
          .first();
    },
 
+   getProfileOnlyById(db, id) {
+      return ProfileService.getProfileOnly(db)
+         .where("developit_profiles.user_id", id)
+         .first();
+   },
+
    insertProfile(db, profile) {
+      console.log(profile.user_id);
       return db
          .insert(profile)
          .into("developit_profiles")
