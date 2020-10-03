@@ -25,6 +25,7 @@ profilesRouter
       //service object
       .getById(req.app.get("db"), req.params.user_id)
       .then((profile) => {
+        console.log(profile)
         res.json(profile);
       })
       .catch(next);

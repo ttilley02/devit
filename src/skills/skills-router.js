@@ -23,10 +23,10 @@ skillsRouter
       const { user_id, skill_name, skill_level } = req.body;
       const sk = { user_id, skill_name, skill_level };
 
-      sk.user_id = req.params.user_id;
-
+      // sk.user_id = req.params.user_id;
+      console.log(sk)
       skillService
-         .insertskill(req.app.get("db"), sk, req.params.user_id)
+         .insertskill(req.app.get("db"), sk, sk.user_id)
          .then(() => {
             return res.status(204).json({
                message: "skill updated",

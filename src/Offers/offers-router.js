@@ -115,8 +115,8 @@ offersRouter
       .catch(next);
   })
   .patch(jsonBodyParser, (req, res, next) => {
-    const { payrate, offer_info, offer_detail, response } = req.body;
-    const newOfferDetails = { payrate, offer_info, offer_detail, response };
+    const { payrate, offer_info, offer_detail, response, dev_id } = req.body;
+    const newOfferDetails = { payrate, offer_info, offer_detail, response, dev_id };
 
     if (
       newOfferDetails.offer_detail == null ||
