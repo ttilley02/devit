@@ -74,7 +74,7 @@ profilesRouter
          });
       }
 
-      profileParams.user_id = req.params.user_id;
+      profileParams.user_id = req.user.id;
 
       profileService
          //service object
