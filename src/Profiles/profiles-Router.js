@@ -73,6 +73,9 @@ profilesRouter
             },
          });
       }
+      if (profileParams.image === 0) {
+         profileParams.image = "https://i.imgur.com/mT2hpLl.jpg";
+      }
 
       profileParams.user_id = req.user.id;
 
