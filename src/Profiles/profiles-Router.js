@@ -66,14 +66,8 @@ profilesRouter
    .post(requireAuth, jsonBodyParser, (req, res, next) => {
       const { dev_blurb, emp_blurb, image } = req.body;
       const profileParams = { dev_blurb, emp_blurb, image };
-      if (profileParams === 0) {
-         return res.status(400).json({
-            error: {
-               message: `say something about yourself!`,
-            },
-         });
-      }
-      if (profileParams.image === 0) {
+
+      if (!profileParams.image) {
          profileParams.image = "https://i.imgur.com/mT2hpLl.jpg";
       }
 
