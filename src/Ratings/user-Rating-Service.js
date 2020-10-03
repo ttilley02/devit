@@ -5,7 +5,7 @@ const UserRatingService = {
    insertRating(knex, newRating) {
        return knex
            .insert(newRating)
-           .into('cart')
+           .into('ratings')
            .returning('*')
            .then(rows => {
                return rows[0]
