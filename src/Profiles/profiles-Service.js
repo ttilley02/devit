@@ -53,12 +53,7 @@ const ProfileService = {
             "developit_profiles.user_id",
             "developit_profiles.image",
             "developit_users.nickname"
-         )
-         .then(() => {
-            if (res === null) {
-               ProfileService.getProfileOnlyById(db, 2);
-            }
-         });
+         );
    },
 
    getProfileOnly(db) {
@@ -81,7 +76,14 @@ const ProfileService = {
    getById(db, id) {
       return ProfileService.getAllProfiles(db)
          .where("developit_profiles.user_id", id)
-         .first();
+         .first()
+         .then((res) => {
+            if (!res) {
+               return ProfileService.getProfileOnlyById(db, id);
+            } else {
+               return res;
+            }
+         });
    },
 
    getProfileOnlyById(db, id) {
