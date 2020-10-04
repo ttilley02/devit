@@ -49,6 +49,7 @@ function makeOffersArray(users) {
          employer_id: 1,
          dev_id: 3,
          offer_detail: "Test Offer 1",
+         offer_info: "test offer info here",
       },
       {
          id: 2,
@@ -56,6 +57,7 @@ function makeOffersArray(users) {
          employer_id: 4,
          dev_id: 3,
          offer_detail: "Test Offer 2",
+         offer_info: "test offer info here",
       },
       {
          id: 3,
@@ -63,6 +65,7 @@ function makeOffersArray(users) {
          employer_id: 4,
          dev_id: 3,
          offer_detail: "Test Offer 3",
+         offer_info: "test offer info here",
       },
       {
          id: 4,
@@ -70,6 +73,7 @@ function makeOffersArray(users) {
          employer_id: 1,
          dev_id: 5,
          offer_detail: "Test Offer 4",
+         offer_info: "test offer info here",
       },
    ];
 }

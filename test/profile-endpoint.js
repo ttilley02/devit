@@ -191,5 +191,27 @@ describe("Profile Endpoints", function () {
                .expect(200);
          });
       });
+      context("profile without skills by ID", () => {
+         const testUsers = makeUsersArray();
+         const testProfile = makeProfilesArray();
+
+         beforeEach("insert users", () => {
+            return db
+               .into("developit_users")
+               .insert(testUsers)
+               .then(() => {
+                  return db.into("developit_profiles").insert(testProfile);
+               });
+         });
+
+         const profId = 1;
+
+         it("GET /api/profiles responds with 200 profile without skills by ID", () => {
+            return supertest(app)
+               .get(`/api/profiles/bUser/${profId}`)
+               .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
+               .expect(200);
+         });
+      });
    });
 });

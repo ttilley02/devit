@@ -86,7 +86,6 @@ const ProfileService = {
    },
 
    insertProfile(db, profile) {
-      console.log(profile.user_id);
       return db
          .insert(profile)
          .into("developit_profiles")

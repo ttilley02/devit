@@ -1,13 +1,16 @@
+const { expect } = require("chai");
 const knex = require("knex");
 const app = require("../src/app");
-const helpers = require("./fixtures/test-helpers");
+const { makeUsersArray } = require("./fixtures/user.fixtures");
+const { makeProfilesArray } = require("./fixtures/profiles.fixtures");
+const { makeOffersArray } = require("../test/fixtures/test-helpers");
+const { makeSkillsArray } = require("./fixtures/skills.fixtures");
+const { makeUserSkillsArray } = require("./fixtures/userSkills.fixtures");
+const { makeLevelsArray } = require("./fixtures/levels.fixtures");
+const authHelper = require("./authHelper");
 
-let bearerToken;
-
-describe("Offers Endpoints", function () {
+describe("Profile Endpoints", function () {
    let db;
-
-   const { testUsers } = helpers.makeOffersFixtures();
 
    before("make knex instance", () => {
       db = knex({
@@ -19,38 +22,44 @@ describe("Offers Endpoints", function () {
 
    after("disconnect from db", () => db.destroy());
 
-   before("cleanup", () => {
-      helpers.cleanTables(db);
-   });
+   before("clean the table", () =>
+      db.raw(
+         "TRUNCATE developit_users, developit_profiles,developit_levels, developit_skills, developit_user_skills RESTART IDENTITY CASCADE"
+      )
+   );
 
-   beforeEach("authorization", () => {
-      return supertest(app)
-         .post("/api/users")
-         .send(testUsers[1])
-         .then((createdUserRes) => {
-            return supertest(app)
-               .post("/api/auth/login")
-               .send(testUsers[1])
-               .then((response) => {
-                  bearerToken = response.body.authToken;
-                  return true;
-               });
-         });
-   });
+   afterEach("cleanup", () =>
+      db.raw(
+         "TRUNCATE developit_users, developit_profiles,developit_levels, developit_skills, developit_user_skills RESTART IDENTITY CASCADE"
+      )
+   );
 
    describe(`POST /api/offers`, () => {
       context(`posts an offer`, () => {
+         const testUsers = makeUsersArray();
+         const testProfile = makeProfilesArray();
+
          const testOffer = {
+            image: "avatar.jpg",
+            emp_name: 2,
             dev_id: 1,
             payrate: 35,
             offer_info: "New Test Offer Info",
             offer_detail: "New Test Offer Detail",
          };
+         beforeEach("insert users", () => {
+            return db
+               .into("developit_users")
+               .insert(testUsers)
+               .then(() => {
+                  return db.into("developit_profiles").insert(testProfile);
+               });
+         });
 
          it(`successfully posts an offer`, () => {
             return supertest(app)
                .post("/api/offers")
-               .set("Authorization", `Bearer ${bearerToken}`)
+               .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                .send(testOffer)
                .expect(201)
                .expect((res) => {
@@ -65,10 +74,27 @@ describe("Offers Endpoints", function () {
          context(
             `it retrieves a users offers based on dev_id & logged in user`,
             () => {
+               const testUsers = makeUsersArray();
+               const testProfile = makeProfilesArray();
+
+               beforeEach("insert users", () => {
+                  return db
+                     .into("developit_users")
+                     .insert(testUsers)
+                     .then(() => {
+                        return db
+                           .into("developit_profiles")
+                           .insert(testProfile);
+                     });
+               });
+
                it(`retrieved dev offers`, () => {
                   return supertest(app)
                      .get("/api/offers/dev")
-                     .set("Authorization", `Bearer ${bearerToken}`)
+                     .set(
+                        "Authorization",
+                        authHelper.makeAuthHeader(testUsers[0])
+                     )
                      .expect(200)
                      .expect((res) => {
                         testUsers[1].id === res.body.dev_id;
@@ -84,10 +110,26 @@ describe("Offers Endpoints", function () {
                response: true,
             };
 
+            const testUsers = makeUsersArray();
+            const testProfile = makeProfilesArray();
+            const testOffers = makeOffersArray();
+
+            beforeEach("insert users", () => {
+               return db
+                  .into("developit_users")
+                  .insert(testUsers)
+                  .then(() => {
+                     return db.into("developit_profiles").insert(testProfile);
+                  })
+                  .then(() => {
+                     return db.into("developit_offers").insert(testOffers);
+                  });
+            });
+
             it(`responded to an offer`, () => {
                return supertest(app)
                   .patch("/api/offers/dev/1")
-                  .set("Authorization", `Bearer ${bearerToken}`)
+                  .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                   .send(testResponse)
                   .expect(204)
                   .expect((res) => {
@@ -107,10 +149,31 @@ describe("Offers Endpoints", function () {
          context(
             `it retrieves a users offers based on employer_id & logged in user`,
             () => {
+               const testUsers = makeUsersArray();
+               const testProfile = makeProfilesArray();
+               const testOffers = makeOffersArray();
+
+               beforeEach("insert users", () => {
+                  return db
+                     .into("developit_users")
+                     .insert(testUsers)
+                     .then(() => {
+                        return db
+                           .into("developit_profiles")
+                           .insert(testProfile);
+                     })
+                     .then(() => {
+                        return db.into("developit_offers").insert(testOffers);
+                     });
+               });
+
                it(`retrieved employer offers`, () => {
                   return supertest(app)
                      .get("/api/offers/emp")
-                     .set("Authorization", `Bearer ${bearerToken}`)
+                     .set(
+                        "Authorization",
+                        authHelper.makeAuthHeader(testUsers[0])
+                     )
                      .expect(200)
                      .expect((res) => {
                         testUsers[1].id === res.body.employer_id;
@@ -122,10 +185,25 @@ describe("Offers Endpoints", function () {
 
       describe(`GET /offers/:offer_id`, () => {
          context(`it retrieves an offer based on its id`, () => {
+            const testUsers = makeUsersArray();
+            const testProfile = makeProfilesArray();
+            const testOffers = makeOffersArray();
+
+            beforeEach("insert users", () => {
+               return db
+                  .into("developit_users")
+                  .insert(testUsers)
+                  .then(() => {
+                     return db.into("developit_profiles").insert(testProfile);
+                  })
+                  .then(() => {
+                     return db.into("developit_offers").insert(testOffers);
+                  });
+            });
             it(`retrieves the correct offer`, () => {
                return supertest(app)
                   .get("/api/offers/1")
-                  .set("Authorization", `Bearer ${bearerToken}`)
+                  .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                   .expect(200)
                   .expect((res) => {
                      res.body.id === 1;
@@ -142,11 +220,26 @@ describe("Offers Endpoints", function () {
             offer_info: "Test Info Update 1",
             offer_detail: "Test Details Update 1",
          };
+         const testUsers = makeUsersArray();
+         const testProfile = makeProfilesArray();
+         const testOffers = makeOffersArray();
+
+         beforeEach("insert users", () => {
+            return db
+               .into("developit_users")
+               .insert(testUsers)
+               .then(() => {
+                  return db.into("developit_profiles").insert(testProfile);
+               })
+               .then(() => {
+                  return db.into("developit_offers").insert(testOffers);
+               });
+         });
 
          it(`updated the offer`, () => {
             return supertest(app)
                .patch("/api/offers/1")
-               .set("Authorization", `Bearer ${bearerToken}`)
+               .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                .send(testResponse)
                .expect(204)
                .expect((res) => {
@@ -168,10 +261,25 @@ describe("Offers Endpoints", function () {
 
    describe(`DELETE /offers/:offer_id`, () => {
       context(`it deletes an offer`, () => {
+         const testUsers = makeUsersArray();
+         const testProfile = makeProfilesArray();
+         const testOffers = makeOffersArray();
+
+         beforeEach("insert users", () => {
+            return db
+               .into("developit_users")
+               .insert(testUsers)
+               .then(() => {
+                  return db.into("developit_profiles").insert(testProfile);
+               })
+               .then(() => {
+                  return db.into("developit_offers").insert(testOffers);
+               });
+         });
          it(`deleted the offer`, () => {
             return supertest(app)
                .delete("/api/offers/1")
-               .set("Authorization", `Bearer ${bearerToken}`)
+               .set("Authorization", authHelper.makeAuthHeader(testUsers[0]))
                .expect(200)
                .expect((res) => {
                   res.body.message === "offer deleted";

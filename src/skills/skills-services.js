@@ -24,18 +24,6 @@ const skillService = {
          .then((skill) => skillService.getById(db, skill.user_id));
    },
 
-   //IN PROGRESS OF BUG FIXING
-
-   // updateSkill(db, skill, user_id, skill_name) {
-   //   console.log(skill)
-
-   //   return db
-   //     .from("developit_user_skills")
-   //     .where("developit_user_skills.skill_name" , skill_name  )
-   //     .andWhere("developit_user_skills.user_id", user_id  )
-   //     .update(skill);
-   // },
-
    delete(db, user_id, skill) {
       return db
          .from("developit_user_skills")

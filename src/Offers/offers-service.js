@@ -9,7 +9,6 @@ const OffersService = {
       return OffersService.getAllOffers(db).where("offers.id", id);
    },
    getByDevId(db, devId) {
-      console.log(devId);
       return OffersService.getAllOffers(db).where("offers.dev_id", devId);
    },
    getByEmployerId(db, empId) {
