@@ -14,19 +14,19 @@ BEGIN;
     INSERT INTO developit_users
         (nickname, password, profile)
     VALUES
-        ('Demo', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', true ),
-        ('Demo2', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', true );
+        ('DemoFreelancer', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', true ),
+        ('DemoBusiness', '$2a$12$JzJ9BY1KtVLCgZNCrEBUpOCuEkukq.fdQ1CqFTn0p0ftOVOYToQI2', false );
 
     INSERT INTO developit_profiles
         (dev_blurb, emp_blurb, image, user_id )
     VALUES
         ('cool guy looking for work', '', 'https://i.imgur.com/1iP19yP.jpg', 1),
-        ('', 'looking to hire someone for my team', 'https://i.imgur.com/2GRjjkh.jpg', 2);
+        ('test', 'looking to hire someone for my team', 'https://i.imgur.com/2GRjjkh.jpg', 2);
 
     INSERT INTO developit_offers
-        (employer_id, dev_id, payrate, offer_info, offer_detail)
+        (employer_id, dev_id, payrate, offer_info, offer_detail, image , emp_name)
     VALUES
-        (2, 1, 60, 'Database Administrator Position', 'Im looking to hire a SQL dev.');
+        (2, 1, 60, 'Database Administrator Position', 'Im looking to hire a front end dev.', 'https://i.imgur.com/2GRjjkh.jpg', 'DemoBusiness');
 
 
     INSERT INTO developit_messages
@@ -78,7 +78,8 @@ BEGIN;
         (1, 'React', 'entry'),
         (1, 'Node.js', 'entry'),
         (1, 'Java', 'expert'),
-        (1, 'Drupal', 'mid');
+        (1, 'Drupal', 'mid'),
+        (2, 'C++', 'expert');
 
 
     INSERT INTO developit_user_reviews
