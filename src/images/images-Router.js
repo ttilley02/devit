@@ -7,7 +7,7 @@ const { json } = require("express");
 const imagesRouter = express.Router();
 const jsonBodyParser = express.json();
 
-//Add a image
+//update an image
 imagesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
    const { image } = req.body;
    const newImageFields = { image };
@@ -21,16 +21,6 @@ imagesRouter.route("/").patch(requireAuth, jsonBodyParser, (req, res, next) => {
          return res.status(204).json({
             image: "image uploaded",
          });
-      })
-      .catch(next);
-});
-
-// get all offers specific to dev/recipient
-imagesRouter.route("/myimages").get(requireAuth, (req, res, next) => {
-   imageService
-      .getById(database, req.user.id)
-      .then((image) => {
-         res.json(image);
       })
       .catch(next);
 });

@@ -3,6 +3,9 @@ const xss = require("xss");
 const jsonBodyParser = express.json();
 
 const ProfileService = {
+   //Gets profiles with a max of 3 skills/Languages.
+   //Looks up skills with matching ID's from User Skills
+   //Then uses those ID's to query for corresponding profiles
    getProfiles(db, s1, s2, s3) {
       return db
          .from("developit_user_skills as skills")
@@ -21,6 +24,8 @@ const ProfileService = {
             );
          });
    },
+
+   //Simple call to return all profiles.  Profiles / skills and user table combined here.
 
    getAllProfiles(db) {
       return db
@@ -56,6 +61,8 @@ const ProfileService = {
          );
    },
 
+   // Call to get profiles for users without skills
+
    getProfileOnly(db) {
       return db
          .from("developit_profiles")
@@ -73,6 +80,7 @@ const ProfileService = {
          );
    },
 
+   //ID search for profiles.  Uses callback
    getById(db, id) {
       return ProfileService.getAllProfiles(db)
          .where("developit_profiles.user_id", id)
@@ -86,12 +94,14 @@ const ProfileService = {
          });
    },
 
+   //ID search for profiles without skills.  Uses callback
    getProfileOnlyById(db, id) {
       return ProfileService.getProfileOnly(db)
          .where("developit_profiles.user_id", id)
          .first();
    },
 
+   //take profile from router and insert here.
    insertProfile(db, profile) {
       return db
          .insert(profile)
@@ -101,32 +111,11 @@ const ProfileService = {
          .then((profile) => ProfileService.getById(db, profile.id));
    },
 
+   //take profile changes from router and update here.
    updateProfile(db, newProfileFields) {
       return db("developit_profiles as profile")
          .where("profile.user_id", newProfileFields.user_id)
          .update(newProfileFields);
-   },
-
-   getAllProjects(db) {
-      return db.from("developit_user_projects as offers").select("*");
-   },
-
-   insertProject(db, project) {
-      return db
-         .insert(project)
-         .into("developit_user_projects")
-         .returning("*")
-         .then(([project]) => project)
-         .then((project) =>
-            ProfileService.getProjectsByDevId(db, project.dev_id)
-         );
-   },
-
-   getProjectsByDevId(db, id) {
-      return ProfileService.getAllProjects(db).where(
-         "developit_user_projects.dev_id",
-         id
-      );
    },
 };
 

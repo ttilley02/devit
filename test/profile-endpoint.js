@@ -8,7 +8,7 @@ const { makeUserSkillsArray } = require("./fixtures/userSkills.fixtures");
 const { makeLevelsArray } = require("./fixtures/levels.fixtures");
 const authHelper = require("./authHelper");
 
-describe.only("Profile Endpoints", function () {
+describe("Profile Endpoints", function () {
    let db;
 
    before("make knex instance", () => {

@@ -1,20 +1,21 @@
 const xss = require("xss");
 
 const skillService = {
+   //shows all skills
    getAllSkills(db) {
       return db
          .from("developit_user_skills AS userSkills")
          .distinct("user_id", db.raw("array_agg(skill_name) AS state"))
          .groupBy("user_id");
    },
-
+   //query for skill by user ID
    getById(db, id) {
       return skillService
          .getAllSkills(db)
          .where(" userSkills.user_id", id)
          .first();
    },
-
+   //insert skill here
    insertskill(db, skill) {
       return db
          .insert(skill)
@@ -24,6 +25,7 @@ const skillService = {
          .then((skill) => skillService.getById(db, skill.user_id));
    },
 
+   // Delete skill
    delete(db, user_id, skill) {
       return db
          .from("developit_user_skills")

@@ -5,6 +5,7 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const skillsRouter = express.Router();
 const jsonBodyParser = express.json();
 
+// retrieve skills
 skillsRouter
    .route("/:skill_id")
    .get(requireAuth, jsonBodyParser, (req, res, next) => {
@@ -17,6 +18,7 @@ skillsRouter
          .catch(next);
    });
 
+//add skills to a user.  Used in the front for user profile changes
 skillsRouter
    .route("/add/:user_id")
    .post(requireAuth, jsonBodyParser, (req, res, next) => {
@@ -35,26 +37,7 @@ skillsRouter
          .catch(next);
    });
 
-//IN PROGRESS OF BUG FIXING
-// skillsRouter
-// .route("/update/:user_id/:skill_name/")
-// .patch( jsonBodyParser, (req, res, next) => {
-
-//   const {user_id ,skill_name, skill_level } = req.body;
-//   const sk = {user_id, skill_name, skill_level };
-
-//   sk.user_id = req.params.user_id
-
-//   skillService
-//   .updateSkill(req.app.get("db"),sk, req.params.user_id,req.params.skill)
-//   .then(() => {
-//     res.status(204).json({
-//       message: "updated!"
-//     });
-//   })
-//   .catch(next);
-// });
-
+//  Delete a skill from a user
 skillsRouter
    .route("/delete/:user_id/:skill")
    .delete(requireAuth, jsonBodyParser, (req, res, next) => {

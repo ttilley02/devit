@@ -17,6 +17,8 @@ const OffersService = {
    serializeOffers(offers) {
       return offers.map(this.serializeOffer);
    },
+
+   //serializes response object for all data returned.
    serializeOffer(offer) {
       const offerTree = new Treeize();
 

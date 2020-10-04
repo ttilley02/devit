@@ -1,5 +1,6 @@
 const xss = require("xss");
 
+//SQL call to patch an image for profile updates
 const imagesService = {
    updateImage(db, image) {
       return db("developit_profiles as profile")

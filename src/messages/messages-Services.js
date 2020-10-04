@@ -1,5 +1,7 @@
 const xss = require("xss");
 
+//This gets messages for users and includes meta info for the front end to sort and organize messages based
+//on timing.  Additionally allows for them to use an image.
 const messagesService = {
    getById(db, id) {
       return db
@@ -16,6 +18,9 @@ const messagesService = {
             this.where("sender_id", id).orWhere("receiver_id", id);
          });
    },
+
+   // Lets user send message with corresponding receiever and sender ID.
+   //Grabs the iamge from the sender first then makes a SQL call to post.
    sendMessage(db, newMessage) {
       return db
          .from("developit_profiles as profile")
