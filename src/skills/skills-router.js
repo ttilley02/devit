@@ -71,4 +71,18 @@ skillsRouter
          .catch(next);
    });
 
+//  Delete all user skills
+skillsRouter
+   .route("/delete/:user_id/")
+   .delete(requireAuth, jsonBodyParser, (req, res, next) => {
+      skillService
+         .deleteSkills(req.app.get("db"), req.params.user_id)
+         .then(() => {
+            res.status(204).json({
+               message: "deleted!",
+            });
+         })
+         .catch(next);
+   });
+
 module.exports = skillsRouter;
