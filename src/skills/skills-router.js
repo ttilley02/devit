@@ -31,12 +31,32 @@ skillsRouter
          .insertskill(req.app.get("db"), sk, req.params.user_id)
          .then(() => {
             return res.status(204).json({
-               message: "skill updated",
+               message: "skill added",
             });
          })
          .catch(next);
    });
 
+//add skills to a user.  Used in the front for user profile changes
+skillsRouter
+   .route("/batch/:user_id")
+   .post(requireAuth, jsonBodyParser, (req, res, next) => {
+      const skills = req.body;
+      const sk = skills;
+      const skillArray = sk.map((skill) => ({
+         ...skill,
+         user_id: req.user.id,
+      }));
+
+      skillService
+         .insertskillBatch(req.app.get("db"), skillArray, req.user.id)
+         .then(() => {
+            return res.status(204).json({
+               message: "skill added",
+            });
+         })
+         .catch(next);
+   });
 //  Delete a skill from a user
 skillsRouter
    .route("/delete/:user_id/:skill")

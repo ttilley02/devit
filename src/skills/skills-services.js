@@ -25,6 +25,30 @@ const skillService = {
          .then((skill) => skillService.getById(db, skill.user_id));
    },
 
+   //insert multiple skills here
+   insertskillBatch(db, skillsArray, user_id) {
+      return db
+         .from("developit_user_skills")
+         .andWhere("developit_user_skills.user_id", user_id)
+         .delete()
+         .then(() => {
+            db.insert(skillsArray)
+               .into("developit_user_skills")
+               .returning("*")
+               .then(([skills]) => skills)
+               .then((skills) => skillService.getById(db, skills.user_id));
+         });
+   },
+
+   //update skill here
+   updateskill(db, skill) {
+      return db
+         .from("developit_user_skills")
+         .andWhere("developit_user_skills.user_id", user_id)
+         .delete()
+         .then();
+   },
+
    // Delete skill
    delete(db, user_id, skill) {
       return db
