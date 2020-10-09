@@ -68,6 +68,13 @@ const skillService = {
          .andWhere("developit_user_skills.user_id", user_id)
          .delete();
    },
+      // Delete all user skills
+   deleteSkills(db, user_id) {
+      return db
+         .from("developit_user_skills")
+         .where("developit_user_skills.user_id", user_id)
+         .delete();
+   }
 };
 
 module.exports = skillService;
