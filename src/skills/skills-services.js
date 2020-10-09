@@ -27,16 +27,27 @@ const skillService = {
 
    //insert multiple skills here
    insertskillBatch(db, skillsArray, user_id) {
+      const dummy = {
+         skill_name: "dummy",
+         skill_level: "expert",
+         user_id: user_id,
+      };
       return db
          .from("developit_user_skills")
-         .andWhere("developit_user_skills.user_id", user_id)
-         .delete()
+         .where("developit_user_skills.user_id", user_id)
+         .update(dummy)
          .then(() => {
             db.insert(skillsArray)
                .into("developit_user_skills")
                .returning("*")
                .then(([skills]) => skills)
                .then((skills) => skillService.getById(db, skills.user_id));
+         })
+         .then(() => {
+            return db
+               .from("developit_user_skills")
+               .where("developit_user_skills.skill_name", dummy.skill_name)
+               .delete();
          });
    },
 

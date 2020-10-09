@@ -63,7 +63,8 @@ BEGIN;
         ('Ruby'),
         ('Rust'),
         ('Visual Basic'),
-        ('SQL');
+        ('SQL'),
+        ('dummy');
 
     INSERT INTO developit_levels
         (skill_level)

@@ -40,7 +40,7 @@ skillsRouter
 //add skills to a user.  Used in the front for user profile changes
 skillsRouter
    .route("/batch/:user_id")
-   .post(requireAuth, jsonBodyParser, (req, res, next) => {
+   .patch(requireAuth, jsonBodyParser, (req, res, next) => {
       const skills = req.body;
       const sk = skills;
       const skillArray = sk.map((skill) => ({
